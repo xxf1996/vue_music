@@ -42,6 +42,9 @@ export default {
         this.full.height = window.innerHeight + 'px'
         this.rem()
         window.addEventListener('resize', this.rem)
+        if(this.$store.state.uid === null){
+            this.$router.push({name: 'login'})
+        }
     }
 }
 </script>

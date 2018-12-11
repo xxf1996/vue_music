@@ -33,12 +33,14 @@ export default {
 <style scoped lang="scss">
     .banner{
         position: relative;
+        padding: 6rem 0;
     }
     .banner-bg{
         position: absolute;
         left: 0;
-        right: 0;
+        top: 0;
         height: 80%;
+        width: 100%;
         background-color: $theme_bg;
     }
     .banner-container{
@@ -48,8 +50,7 @@ export default {
     }
     .banner-img{
         width: 100%;
-        border-bottom-left-radius: 5rem;
-        border-bottom-right-radius: 5rem;
+        border-radius: 5rem;
     }
     .banner-type{
         position: absolute;
