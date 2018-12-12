@@ -42,6 +42,23 @@ export default {
         this.full.height = window.innerHeight + 'px'
         this.rem()
         window.addEventListener('resize', this.rem)
+        if(this.$store.state.uid === null){
+            let uid = sessionStorage.getItem('X_uid')
+            if(uid){
+                this.$store.commit('changeUser', uid)
+                this.$req('/user/detail', {
+                    uid
+                }).then(res => {
+                    if(res.data.code === 200){
+                        this.$store.commit('changeInfo', res.data.profile)
+                    }
+                }).catch(err => {
+                    throw err
+                })
+            }else{
+                this.$router.push({name: 'login'})
+            }
+        }
     }
 }
 </script>
