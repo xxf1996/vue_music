@@ -19,6 +19,11 @@ export default {
             tab: ['mylist', 'myradio']
         }
     },
+    computed: {
+        userInfo() {
+            return this.$store.state.userInfo
+        }
+    },
     methods: {
         changeTab(val) {
             this.$router.push({name: this.tab[val]})
@@ -26,7 +31,14 @@ export default {
     },
     created() {
         this.changeTab(this.curTab)
-        this.$store.commit('changeTitle', this.$store.state.userInfo.nickname)
+        if(this.userInfo.nickname){
+            this.$store.commit('changeTitle', this.userInfo.nickname)
+        }
+    },
+    watch: {
+        userInfo(nVal, oVal){
+            this.$store.commit('changeTitle', nVal.nickname)
+        }
     }
 }
 </script>

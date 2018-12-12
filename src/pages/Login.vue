@@ -31,6 +31,7 @@ export default {
                 uid: this.uid
             }).then(res => {
                 if(res.data.code === 200){
+                    sessionStorage.setItem('X_uid', this.uid)
                     this.$store.commit('changeUser', this.uid)
                     this.$store.commit('changeInfo', res.data.profile)
                     this.$router.push({name: 'index'})
