@@ -21,6 +21,10 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: () => import(/* webpackChunkName: "login" */ './pages/Login')
+        },
+        {
+            path: '/playlist/:id',
+            component: () => import(/* webpackChunkName: "playlist" */ './pages/PlayList')
         }
     ]
 })

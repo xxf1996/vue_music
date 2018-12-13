@@ -1,5 +1,5 @@
 <template>
-    <section class="block" :style="blockSize">
+    <section class="block" :style="blockSize" @click="showPlaylist(info.id)">
         <section class="cover-container" :style="cover">
             <img class="cover-img" :src="info.coverImgUrl" :alt="info.name">
             <div class="cover-shadow"></div>
@@ -25,6 +25,11 @@ export default {
             return {
                 width: this.size || defaultSize
             }
+        }
+    },
+    methods: {
+        showPlaylist(id) {
+            this.$router.push(`/playlist/${id}`)
         }
     }
 }

@@ -44,9 +44,6 @@ export default {
 </script>
 
 <style scoped>
-    .index{
-        text-align: center;
-    }
     .index-tab{
         height: 40rem;
     }

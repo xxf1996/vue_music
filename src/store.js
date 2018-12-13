@@ -21,6 +21,12 @@ export default new Vuex.Store({
         },
         changeTitle(state, title){
             state.headTitle = title
+        },
+        changeLeft(state, n){
+            state.headLeft = n
+        },
+        changeRight(state, n){
+            state.headRight = n
         }
     }
 })
