@@ -1,11 +1,11 @@
 <template>
     <section class="head">
         <section class="head-left">
-            <Icon :type="left"/>
+            <Icon :type="left" @click.native="op(left)"/>
         </section>
         <span class="head-title">{{title}}</span>
         <section class="head-right">
-            <Icon :type="right"/>
+            <Icon :type="right" @click.native="op(right)"/>
         </section>
     </section>
 </template>
@@ -13,7 +13,18 @@
 <script>
 export default {
     name: 'Header',
-    props: ['left', 'title', 'right']
+    props: ['left', 'title', 'right'],
+    methods: {
+        op(type) {
+            switch(type) {
+                case 23:
+                    this.$router.go(-1)
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
 </script>
 

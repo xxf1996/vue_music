@@ -17,7 +17,7 @@
         <InfoList class="list-more" :show.sync="more">
             <p class="more-tip" slot="title">{{moreTitle}}</p>
             <section class="more-content" slot="content">
-                <PicList class="more-item" v-for="(list, k) in moreList" size="40rem" :key="k">
+                <PicList class="more-item" v-for="(list, k) in moreList" size="40rem" :key="k" @click.native="toDetail(list.id)">
                     <img class="more-cover" :src="list.coverImgUrl" :alt="list.name" slot="cover">
                     <p class="more-title" slot="title">{{list.name}}</p>
                     <p class="more-info" slot="info">{{list.trackCount}} 首</p>
@@ -65,6 +65,9 @@ export default {
             this.moreList = info
             this.moreTitle = title
             this.more = true
+        },
+        toDetail(id) {
+            this.$router.push(`/playlist/${id}`)
         }
     },
     created() {

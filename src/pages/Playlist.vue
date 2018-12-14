@@ -24,7 +24,7 @@
                 </section>
             </section>
             <section class="container">
-                <p class="all">
+                <p class="all" @click="play(0)">
                     <section class="all-play">
                         <Icon type="8" size="20rem" />
                     </section>
@@ -32,7 +32,7 @@
                     <span class="all-count">（共{{info.trackCount}}首）</span>
                 </p>
                 <section class="content">
-                    <PicList size="40rem" class="list-item" v-for="(item, i) in info.tracks" :key="i">
+                    <PicList size="40rem" class="list-item" v-for="(item, i) in info.tracks" :key="i" @click.native="play(i)">
                         <span class="list-num" slot="cover">{{i + 1}}</span>
                         <p class="list-title text-more" slot="title">{{item.name + (item.tns? `（${item.tns}）`: '')}}</p>
                         <p class="list-info text-more" slot="info">{{singer(item.ar)}} - {{item.al.name}}</p>
@@ -69,6 +69,11 @@ export default {
     methods: {
         singer(arr) {
             return arr.map(item => item.name).join(',')
+        },
+        play(idx) {
+            this.$store.commit('changeList', this.info.tracks)
+            this.$store.commit('changeCur', idx)
+            this.$store.commit('changeBottom', true)
         }
     },
     created() {
