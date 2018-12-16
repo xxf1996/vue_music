@@ -84,11 +84,11 @@ export default {
         this.$player.addEventListener('pause', () => {
             this.$store.commit('changePlaying', false)
         })
-        this.$player.addEventListener('ended', () => {
+        this.$player.addEventListener('ended', () => { // audio播放结束事件
             let next = this.curSong
             let len = this.list.length
 
-            switch(this.$store.state.playMode) {
+            switch(this.$store.state.playMode) { // 自动播放模式
                 case 'loop':
                     next = (next + 1) % len
                     break;
@@ -100,6 +100,14 @@ export default {
                 this.$store.commit('changeCur', next)
             }
         })
+
+        let AudioContext = window.AudioContext || window.webkitAudioContext
+        let ctx = new AudioContext()
+        let source = ctx.createMediaElementSource(this.$player)
+        let analyser = ctx.createAnalyser()
+        source.connect(analyser)
+        analyser.connect(ctx.destination)
+        this.$store.commit('changeAnalyser', analyser)
     },
     watch: {
         song(val, old) { // 监听歌曲信息的变化，一旦变化立即请求歌曲的url进行切换

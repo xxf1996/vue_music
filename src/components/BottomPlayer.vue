@@ -1,14 +1,14 @@
 <template>
-    <section class="player">
+    <section class="player" @click="toFull">
         <img class="cover" :src="album.picUrl" :alt="album.name">
         <section class="text">
             <p class="title hide-more">{{song.name}}</p>
             <p class="info hide-more">{{singer()}}</p>
         </section>
-        <Icon v-show="playing" class="icon" type="12" size="24rem" @click.native="pause" />
-        <Icon v-show="!playing" class="icon" type="8" size="24rem" @click.native="play(null)" />
+        <Icon v-show="playing" class="icon" type="12" size="24rem" @click.native.stop="pause" />
+        <Icon v-show="!playing" class="icon" type="8" size="24rem" @click.native.stop="play(null)" />
 
-        <Icon class="icon" type="1" size="24rem" @click.native="showList" />
+        <Icon class="icon" type="1" size="24rem" @click.native.stop="showList" />
 
         <InfoList class="list" :show.sync="showPlaylist">
             <p class="list-title" slot="title">
@@ -67,12 +67,15 @@ export default {
             this.$player.pause()
         },
         play(idx = null) {
-            if(idx === null){
+            if(idx === null) {
                 this.$player.play()
-            }else{
+            }else {
                 this.$store.commit('changeCur', idx)
                 this.showPlaylist = false
             }
+        },
+        toFull() {
+            this.$router.push({name: 'full'})
         }
     }
 }

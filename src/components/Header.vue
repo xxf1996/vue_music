@@ -1,5 +1,5 @@
 <template>
-    <section class="head">
+    <section class="head" :style="bg">
         <section class="head-left">
             <Icon :type="left" @click.native="op(left)"/>
         </section>
@@ -22,6 +22,13 @@ export default {
                     break;
                 default:
                     break;
+            }
+        }
+    },
+    computed: {
+        bg() {
+            return {
+                'background-color': this.$store.state.headBg
             }
         }
     }

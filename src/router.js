@@ -25,6 +25,11 @@ export default new Router({
         {
             path: '/playlist/:id',
             component: () => import(/* webpackChunkName: "playlist" */ './pages/PlayList')
+        },
+        {
+            path: '/full',
+            name: 'full',
+            component: () => import(/* webpackChunkName: "full" */ './pages/Full')
         }
     ]
 })

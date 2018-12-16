@@ -1,5 +1,5 @@
 <template>
-    <section class="mask" v-show="show" @click="hideMask">
+    <section class="mask" v-show="show" @click.stop="hideMask">
         <section class="container" @click.stop="()=>{}">
             <section class="title">
                 <slot name="title"></slot>
