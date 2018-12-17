@@ -20,6 +20,7 @@ export default new Vuex.Store({
         playing: false, // 是否正在播放
         playMode: 'loop', // 列表的播放模式，loop为列表循环
         analyser: {}, // Audio api的音频分析器结点
+        lyric: '', // 普通歌词文本
     },
     mutations: {
         changeUser(state, id) {
@@ -54,6 +55,9 @@ export default new Vuex.Store({
         },
         changeBg(state, val) {
             state.headBg = val
+        },
+        changeLyric(state, val) {
+            state.lyric = val
         }
     },
     getters: {

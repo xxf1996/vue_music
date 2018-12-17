@@ -1,13 +1,14 @@
 <template>
     <section class="full">
         <div class="full-bg" :style="bg"></div>
-        <section class="full-main">
-            <AudioCanvas v-show="showCover" :cover="cover"></AudioCanvas>
+        <section class="full-main" @click="toggleCover">
+            <AudioCanvas v-show="showCover" :cover="cover" />
+            <FullLyric v-show="!showCover" :lrc="lrcData" :cur="curLine" />
         </section>
         <section class="full-btn">
             <section class="process">
                 <span class="time-cur">{{curTime}}</span>
-                <section class="bar">
+                <section id="bar" @click="timePoint">
                     <div class="bar-bg"></div>
                     <div class="bar-cur" :style="{width: process}"></div>
                     <div class="bar-tip" :style="{left: process}"></div>
@@ -40,6 +41,7 @@
 
 <script>
 import AudioCanvas from '../components/AudioCanvas'
+import FullLyric from '../components/FullLyric'
 import InfoList from '../components/InfoList'
 
 export default {
@@ -50,12 +52,16 @@ export default {
             totalTime: '--:--',
             process: 0,
             showCover: true,
-            showPlaylist: false
+            showPlaylist: false,
+            barWidth: 0,
+            lrcData: [],
+            curLine: 0
         }
     },
     components: {
         AudioCanvas,
-        InfoList
+        InfoList,
+        FullLyric
     },
     computed: {
         playing() {
@@ -80,6 +86,9 @@ export default {
         },
         playMode() {
             return this.$store.state.playMode
+        },
+        lyric() {
+            return this.$store.state.lyric
         }
     },
     methods: {
@@ -89,6 +98,9 @@ export default {
         },
         showList() {
             this.showPlaylist = true
+        },
+        toggleCover() {
+            this.showCover = !this.showCover
         },
         formatTime(t){ // 根据时间（单位s）来格式化显示时间（mm：ss）
             t = Math.round(t)
@@ -129,17 +141,89 @@ export default {
             if(next !== this.curSong){
                 this.$store.commit('changeCur', next)
             }
+        },
+        timePoint(e) { // 歌曲进度条跳转
+            this.$player.currentTime = this.$player.duration * e.offsetX / this.barWidth
+        },
+        parseLyric(){ // 解析lyric歌词，每行歌词信息包括时间轴和内容
+            if(this.lyric == ''){
+                this.lrcData = []
+            }else{
+                let arr = this.lyric.split('\n') // 将歌词按行分割，一行对应一句歌词，但可能存在多个时间点
+                let data = []
+                for(let line of arr){
+                    if(/\]\[/.test(line)){ // 是否存在多个时间点
+                        let res = line.match(/\[(.+)\]([^\[\]]*)/)
+                        let t = res[1].split('][') // 时间点列表
+
+                        for(let item of t) {
+                            let point = item.split(':') // 分，秒分离
+                            let info = {
+                                time: parseInt(point[0]) * 60 + Number(point[1]),
+                                content: res[2]
+                            }
+                            data.push(info)
+                        }
+                    }else{
+                        let res = line.match(/\[([\d]+)\:([\d]+\.[\d]+)\](.*)/)
+                        if(res){
+                            let info = {
+                                time: parseInt(res[1]) * 60 + Number(res[2]),
+                                content: res[3]
+                            }
+                            data.push(info)
+                        }
+                    }
+                }
+                this.lrcData = data
+            }
+        },
+        findCurLyric(t){ // 根据歌曲当前播放进度来查找当前对应显示哪一行歌词
+            if(this.lrcData.length){
+                let data = this.lrcData
+                let len = data.length
+                let [left, right] = [0, len - 1]
+                let idx = 0
+                while(left < right){ // 二分法查找（有序列表，按时间轴顺序进行）
+                    let mid = Math.floor((left + right) / 2)
+                    if(data[mid].time < t){
+                        if(mid === len - 1){
+                            idx = mid
+                            break
+                        }else{
+                            if(data[mid + 1].time < t){
+                                left = mid + 1
+                            }else{
+                                idx = mid
+                                break
+                            }
+                        }
+                    }else{
+                        if(mid === 0){
+                            idx = 0
+                            break
+                        }else{
+                            right = mid
+                        }
+                    }
+                }
+                if(data[len - 1].time < t) idx = len - 1
+                this.curLine = idx
+            }
         }
     },
     created() {
         if(this.info.id){
+            this.parseLyric()
             this.$store.commit('changeBottom', false)
             this.$store.commit('changeBg', 'transparent')
             this.totalTime = this.formatTime(this.$player.duration)
             // this.$player.removeEventListener('timeupdate')
             this.$player.addEventListener('timeupdate', e => { // audio的时间更新事件
-                this.curTime = this.formatTime(this.$player.currentTime)
-                this.process = this.$player.currentTime / this.$player.duration * 100 + '%'
+                let cur = this.$player.currentTime 
+                this.curTime = this.formatTime(cur)
+                this.process = cur / this.$player.duration * 100 + '%'
+                this.findCurLyric(cur)
             })
             this.$player.addEventListener('durationchange', e => { // audio的音源切换事件
                 this.totalTime = this.formatTime(this.$player.duration)
@@ -148,12 +232,20 @@ export default {
             this.$router.go(-1)
         }
     },
+    mounted() {
+        this.barWidth = document.getElementById('bar').clientWidth
+    },
     beforeRouteLeave(to, from, next) {
         if(this.info.id){
             this.$store.commit('changeBottom', true)
         }
         this.$store.commit('changeBg', null)
         next()
+    },
+    watch: {
+        lyric(nVal, oVal) {
+            this.parseLyric()
+        }
     }
 }
 </script>
@@ -201,7 +293,7 @@ export default {
         width: 40rem;
         color: #ccc;
     }
-    .bar{
+    #bar{
         position: relative;
         flex: 1;
         height: 10rem;

@@ -122,6 +122,14 @@ export default {
             }).catch(err => {
                 throw err
             })
+
+            this.$req('/lyric', { // 请求歌词信息（包括普通歌词，翻译歌词以及卡拉ok歌词）
+                id: val.id
+            }).then(res => {
+                if(res.data.code === 200) {
+                    this.$store.commit('changeLyric', res.data.lrc.lyric)
+                }
+            })
         }
     }
 }
