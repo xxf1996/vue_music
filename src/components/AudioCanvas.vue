@@ -1,20 +1,31 @@
 <template>
     <section class="canvas">
-        <img :src="cover" alt="cover" :class="['cover', playing? '': 'cover-pause']">
-        <canvas id="can"></canvas>
+        <section class="container">
+            <img :src="cover" alt="cover" :class="['cover', playing? '': 'cover-pause']">
+            <canvas id="can"></canvas>
+        </section>
+        <section class="func">
+            <Icon class="func-btn" type="26" size="24rem" @click.native="toComment" />
+            <Icon class="func-btn" type="27" size="24rem" />
+        </section>
     </section>
 </template>
 
 <script>
 export default {
     name: 'AudioCanvas',
-    props: ['cover'],
+    props: ['cover', 'song'],
     computed: {
         analyser() {
             return this.$store.state.analyser
         },
         playing() {
             return this.$store.state.playing
+        }
+    },
+    methods: {
+        toComment() {
+            this.$router.push(`/comment/song/${this.song}`)
         }
     },
     mounted() {
@@ -89,6 +100,22 @@ export default {
     .canvas{
         position: relative;
         height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    .container{
+        position: relative;
+        flex: 1;
+    }
+    .func{
+        display: flex;
+        height: 40rem;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .func-btn{
+        color: #fff;
     }
     .cover{
         position: absolute;

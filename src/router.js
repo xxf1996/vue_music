@@ -30,6 +30,13 @@ export default new Router({
             path: '/full',
             name: 'full',
             component: () => import(/* webpackChunkName: "full" */ './pages/Full')
+        },
+        {
+            path: '/comment/song/:id',
+            component: () => import(/* webpackChunkName: "comment" */ './pages/Comment'),
+            meta: {
+                type: 'song'
+            }
         }
     ]
 })

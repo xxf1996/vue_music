@@ -128,6 +128,7 @@ module.exports = {
         extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx', '.css', '.vue'] // 解析引入模块文件时，自动匹配的文件后缀列表
     },
     devServer: { // webpack-dev-server配置
-        publicPath: '/'
+        publicPath: '/',
+        // host: '192.168.0.100' // 本机ip，方便局域网内访问调试
     }
 }

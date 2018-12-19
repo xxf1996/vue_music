@@ -41,6 +41,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.7.8",
+    "eruda": "^1.5.4",
     "muse-ui": "^3.0.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.2",

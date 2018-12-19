@@ -6,7 +6,10 @@
             <section class="info">
                 <section class="cover">
                     <img class="cover-img" :src="info.coverImgUrl" :alt="info.name">
-                    <p class="cover-text">{{info.playCount}} 次</p>
+                    <p class="cover-text">
+                        <Icon type="22" size="16px" />
+                        {{count}}
+                    </p>
                 </section>
                 <section class="about">
                     <p class="about-title">{{info.name}}</p>
@@ -34,8 +37,11 @@
                 <section class="content">
                     <PicList size="40rem" class="list-item" v-for="(item, i) in info.tracks" :key="i" @click.native="play(i)">
                         <span class="list-num" slot="cover">{{i + 1}}</span>
-                        <p class="list-title text-more" slot="title">{{item.name + (item.tns? `（${item.tns}）`: '')}}</p>
+                        <p class="list-title text-more" slot="title">
+                            {{item.name + (item.tns? `（${item.tns}）`: '')}}
+                        </p>
                         <p class="list-info text-more" slot="info">{{singer(item.ar)}} - {{item.al.name}}</p>
+                        <Icon slot="after" type="27" size="24rem" />
                     </PicList>
                 </section>
             </section>
@@ -45,6 +51,7 @@
 
 <script>
 import PicList from '../components/PicList'
+import Num from '../util/num'
 
 export default {
     name: 'Playlist',
@@ -64,6 +71,9 @@ export default {
             return {
                 'background-image': this.info.coverImgUrl? `url(${this.info.coverImgUrl})`: null
             }
+        },
+        count() {
+            return Num.short(this.info.playCount || 0)
         }
     },
     methods: {

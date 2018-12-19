@@ -7,6 +7,9 @@
             <slot name="title"></slot>
             <slot name="info"></slot>
         </section>
+        <section class="after">
+            <slot name="after"></slot>
+        </section>
     </section>
 </template>
 
@@ -45,5 +48,10 @@ export default {
         height: 100%;
         border-bottom: 1px solid #ddd;
         overflow: hidden;
+    }
+    .after{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
