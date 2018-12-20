@@ -16,8 +16,18 @@ export default {
     name: 'InfoList',
     props: ['show'],
     methods: {
-        hideMask() {
+        hideMask(e) {
             this.$emit('update:show', false)
+            e.preventDefault()
+        }
+    },
+    watch: {
+        show(nVal, oVal) {
+            if(nVal) { // show为true时，监听返回键，触发返回键即隐藏该弹出层
+                window.addEventListener('popstate', this.hideMask)
+            }else{
+                window.removeEventListener('popstate', this.hideMask)
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 <template>
     <section class="lyric">
-        <section id="lrc">
+        <p class="no" v-if="noLyric">该歌曲没有歌词</p>
+        <section id="lrc" v-else>
             <p v-for="(item, i) in lrc" :key="i" :class="['line', i === cur? 'line-cur': '']">
                 {{item.content === ''? '\n': item.content}}
             </p>
@@ -17,6 +18,11 @@ export default {
             container: null
         }
     },
+    computed: {
+        noLyric() {
+            return !this.lrc.length
+        }
+    },
     methods: {
         toCurLine() {
             this.container.style.marginTop = -this.container.querySelector('.line-cur').offsetTop + 'px'
@@ -24,13 +30,21 @@ export default {
     },
     mounted() {
         this.container = document.getElementById('lrc')
-        this.toCurLine()
+        if(!this.noLyric){
+            this.toCurLine()
+        }
     },
     updated() { // prop值改变时触发子组件更新，而watch无法监听到
+        if(!this.container){ // v-if切换时可能之前#lrc没有渲染！
+            this.container = document.getElementById('lrc')
+        }
         this.toCurLine()
     },
     watch: {
         cur() {
+            if(!this.container){ // v-if切换时可能之前#lrc没有渲染！
+                this.container = document.getElementById('lrc')
+            }
             this.toCurLine()
         }
     }
@@ -45,6 +59,15 @@ export default {
         padding: 0 12rem;
         overflow-x: hidden;
         overflow-y: auto;
+    }
+    .no{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        color: #fff;
     }
     #lrc{
         position: absolute;

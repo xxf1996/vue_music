@@ -127,7 +127,11 @@ export default {
                 id: val.id
             }).then(res => {
                 if(res.data.code === 200) {
-                    this.$store.commit('changeLyric', res.data.lrc.lyric)
+                    if(res.data.nolyric){
+                        this.$store.commit('changeLyric', false)
+                    }else{
+                        this.$store.commit('changeLyric', res.data.lrc.lyric)
+                    }
                 }
             })
         }

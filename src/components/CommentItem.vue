@@ -9,11 +9,16 @@
                     <p class="name">{{info.user.nickname}}</p>
                     <p class="date">{{postDate}}</p>
                 </div>
-                <span class="user-like">
+                <div class="user-like">
                     {{info.likedCount}}
-                </span>
+                    <Icon type="28" size="16rem" />
+                </div>
             </section>
             <p class="content">{{info.content}}</p>
+            <p class="reply" v-if="isReply">
+                <span class="at">@{{reply[0].user.nickname}}：</span>
+                {{reply[0].content}}
+            </p>
         </section>
     </section>
 </template>
@@ -27,6 +32,12 @@ export default {
     computed: {
         postDate() {
             return Num.date(this.info.time)
+        },
+        reply() {
+            return this.info.beReplied
+        },
+        isReply() {
+            return !!this.reply.length
         }
     }
 }
@@ -69,6 +80,7 @@ export default {
         color: #aaa;
     }
     .user-like{
+        display: inline-block;
         font-size: 12px;
         padding: 0 5rem;
         color: #aaa;
@@ -76,5 +88,19 @@ export default {
     .content{
         margin: 0;
         padding: 8rem 0;
+        font-size: 13px;
+    }
+    .reply{
+        box-sizing: border-box;
+        margin: 5rem 5rem 5rem 0;
+        padding: 5rem;
+        background-color: #fcfcfc;
+        color: #aaa;
+        font-size: 13px;
+        border: 1px solid #eee;
+        border-radius: 3rem;
+    }
+    .at{
+        color: #36f;
     }
 </style>

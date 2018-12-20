@@ -1,6 +1,6 @@
 <template>
     <section class="comment">
-        <section class="target">
+        <section class="target" @click="toTarget">
             <img class="cover" :src="cover" :alt="cover">
             <section class="info">
                 <p class="title">{{title}}</p>
@@ -60,6 +60,16 @@ export default {
             this.cover = data.al.picUrl
             this.title = data.name
             this.singer = data.ar.map(a => a.name).join(',')
+        },
+        toTarget() {
+            switch(this.type) {
+                case 'song':
+                    break;
+                case 'album':
+                    break;
+                default:
+                    break;
+            }
         }
     },
     created() {
@@ -78,26 +88,38 @@ export default {
                             }
                         }) 
                         break;
+                    case 'list':
+                        this.$req('/playlist/detail', {
+                            id: this.id
+                        }).then(res => {
+                            if(res.data.code === 200) {
+                                let info = res.data.playlist
+                                this.cover = info.coverImgUrl
+                                this.title = info.name
+                                this.singer = info.creator.nickname
+                            }
+                        })
+                        break;
                     default:
                         break;
                 }
             }
 
-            switch(this.type) {
-                case 'song':
-                    this.$req('/comment/music', {
-                        id: this.id
-                    }).then(res => {
-                        if(res.data.code === 200) {
-                            this.hot = res.data.hotComments
-                            this.comments = res.data.comments
-                            this.count = res.data.total
-                        }
-                    }) 
-                    break;
-                default:
-                    break;
+            let url = {
+                song: '/comment/music',
+                album: '/comment/album',
+                list: '/comment/playlist'
             }
+
+            this.$req(url[this.type], {
+                id: this.id
+            }).then(res => {
+                if(res.data.code === 200) {
+                    this.hot = res.data.hotComments
+                    this.comments = res.data.comments
+                    this.count = res.data.total
+                }
+            })
         }else{
             this.$router.go(-1)
         }
@@ -135,6 +157,7 @@ export default {
     }
     .singer{
         margin: 0;
+        padding: 0 5rem;
         font-size: 12px;
         color: #36f;
     }

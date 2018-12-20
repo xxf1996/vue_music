@@ -32,7 +32,21 @@ function short(n, isComment = false) {
  */
 function date(n) {
     let t = dayjs(n)
-    return t.format(t.year() === dayjs().year()? 'M月D日': 'YYYY年M月D日') // 根据时间是否为今年格式有所不同
+    let cur = dayjs()
+    let f = ''
+
+    if(t.year() === cur.year()) { // 今年内
+        if(t.month() === cur.month() && t.day() === cur.day()) { // 当天
+            f = 'HH:mm'
+        }else if(t.isBefore(cur.startOf('day')) && t.isAfter(cur.subtract(1, 'day').startOf('day'))) { // 昨天内
+            f = '昨日HH:mm'
+        }else {
+            f = 'M月D日'
+        }
+    }else {
+        f = 'YYYY年M月D日'
+    }
+    return t.format(f)
 }
 
 export default {

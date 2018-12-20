@@ -89,6 +89,9 @@ export default {
         },
         lyric() {
             return this.$store.state.lyric
+        },
+        noLyric() {
+            return this.lyric === false // 没有歌词的情况
         }
     },
     methods: {
@@ -146,7 +149,7 @@ export default {
             this.$player.currentTime = this.$player.duration * e.offsetX / this.barWidth
         },
         parseLyric(){ // 解析lyric歌词，每行歌词信息包括时间轴和内容
-            if(this.lyric == ''){
+            if(this.noLyric || this.lyric == ''){
                 this.lrcData = []
             }else{
                 let arr = this.lyric.split('\n') // 将歌词按行分割，一行对应一句歌词，但可能存在多个时间点
@@ -223,7 +226,9 @@ export default {
                 let cur = this.$player.currentTime 
                 this.curTime = this.formatTime(cur)
                 this.process = cur / this.$player.duration * 100 + '%'
-                this.findCurLyric(cur)
+                if(!this.noLyric){
+                    this.findCurLyric(cur)
+                }
             })
             this.$player.addEventListener('durationchange', e => { // audio的音源切换事件
                 this.totalTime = this.formatTime(this.$player.duration)

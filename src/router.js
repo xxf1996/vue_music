@@ -37,6 +37,20 @@ export default new Router({
             meta: {
                 type: 'song'
             }
+        },
+        {
+            path: '/comment/album/:id',
+            component: () => import(/* webpackChunkName: "comment" */ './pages/Comment'),
+            meta: {
+                type: 'album'
+            }
+        },
+        {
+            path: '/comment/list/:id',
+            component: () => import(/* webpackChunkName: "comment" */ './pages/Comment'),
+            meta: {
+                type: 'list'
+            }
         }
     ]
 })
