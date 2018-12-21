@@ -1,3 +1,9 @@
 $theme_bg: #f5222d; //主题背景色
 $theme_text: #fff;
 $theme_bg2: #fa541c;
+
+.text-more{ // 超过一行的内容用省略号隐藏
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

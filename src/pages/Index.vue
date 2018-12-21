@@ -11,6 +11,9 @@
 </template>
 
 <script>
+/**
+ * 首页
+ */
 export default {
     name: 'Index',
     data() {

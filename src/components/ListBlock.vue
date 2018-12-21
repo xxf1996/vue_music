@@ -15,6 +15,11 @@
 import Num from '../util/num'
 let defaultSize = '110rem'
 
+/**
+ * 首页歌单或专辑等块状图片区域，点击后可进入详情页
+ * @prop {String} size 块状区域大小
+ * @prop {Object} info 歌单信息
+ */
 export default {
     name: 'ListBlock',
     props: ['size', 'info'],

@@ -44,6 +44,9 @@ import AudioCanvas from '../components/AudioCanvas'
 import FullLyric from '../components/FullLyric'
 import InfoList from '../components/InfoList'
 
+/**
+ * 全屏播放器页面，包含可视化频谱和歌词两部分。
+ */
 export default {
     name: 'Full',
     data() {

@@ -10,6 +10,9 @@
 </template>
 
 <script>
+/**
+ * 首页图标功能区域
+ */
 export default {
     name: 'FunGroup',
     data() {

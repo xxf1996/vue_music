@@ -8,6 +8,9 @@
 </template>
 
 <script>
+/**
+ * 『伪』登录页
+ */
 export default {
     name: 'Login',
     data() {

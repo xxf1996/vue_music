@@ -5,6 +5,11 @@
 </template>
 
 <script>
+/**
+ * 封装iconfont的图标
+ * @prop {Number} type 对应iconfont中的symbol值
+ * @prop {String} size 图标的大小，依照font-size的规则
+ */
 export default{
     name: 'Icon',
     props: ['type', 'size'], // type对应图标的symbol名称

@@ -34,6 +34,9 @@ import ListBlock from '../components/ListBlock'
 import InfoList from '../components/InfoList'
 import PicList from '../components/PicList'
 
+/**
+ * 首页内的歌单列表部分
+ */
 export default {
     name: 'MyList',
     components: {

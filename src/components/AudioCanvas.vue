@@ -12,6 +12,11 @@
 </template>
 
 <script>
+/**
+ * 绘制音乐频谱，显示旋转封面
+ * @prop {String} cover 歌曲封面地址
+ * @prop {String} song 歌曲id
+ */
 export default {
     name: 'AudioCanvas',
     props: ['cover', 'song'],

@@ -12,6 +12,12 @@
 </template>
 
 <script>
+/**
+ * 底部浮层，会覆盖所有内容；有一层mask，底部有列表容器；
+ * @prop {Boolean} show 是否显示该浮层（可以与父组件同步更新）
+ * @slot title 底部标题区域
+ * @slot content 底部列表区域
+ */
 export default {
     name: 'InfoList',
     props: ['show'],

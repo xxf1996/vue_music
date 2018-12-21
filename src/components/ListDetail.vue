@@ -31,22 +31,43 @@
                             {{item.name + (item.tns? `（${item.tns}）`: '')}}
                         </p>
                         <p class="list-info text-more" slot="info">{{singer(item.ar)}} - {{item.al.name}}</p>
-                        <Icon slot="after" type="27" size="24rem" />
+                        <Icon slot="after" type="27" size="24rem" @click.native.stop="toOp(item)" />
                     </PicList>
                 </section>
             </section>
         </section>
+        <InfoList :show.sync="showOp">
+            <p class="op-title text-more" slot="title">歌曲：{{songName}}</p>
+            <SongOp :info="songInfo" slot="content" />
+        </InfoList>
     </section>
 </template>
 
 <script>
 import PicList from './PicList'
+import InfoList from './InfoList'
+import SongOp from './SongOp'
 
+/**
+ * 歌单或专辑的详情页（头部信息 + 歌曲列表）
+ * @prop {Array} list 歌曲列表
+ * @prop {String} cover 封面图片地址
+ * @slot info 头部信息内容区域
+ */
 export default {
     name: 'ListDetail',
     props: ['list', 'cover'],
     components: {
-        PicList
+        PicList,
+        SongOp,
+        InfoList
+    },
+    data() {
+        return {
+            showOp: false,
+            songName: '',
+            songInfo: {}
+        }
     },
     computed: {
         loading() {
@@ -69,6 +90,11 @@ export default {
         },
         singer(arr) {
             return arr.map(item => item.name).join(',')
+        },
+        toOp(info) {
+            this.songName = info.name
+            this.songInfo = info
+            this.showOp = true
         }
     }
 }
@@ -152,5 +178,12 @@ export default {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+    }
+    .op-title{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 5rem;
+        font-size: 12px;
+        line-height: 40rem;
     }
 </style>

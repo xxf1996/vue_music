@@ -22,6 +22,9 @@
 import ListDetail from '../components/ListDetail'
 import Num from '../util/num'
 
+/**
+ * 歌单详情页，根据路由id动态获取内容
+ */
 export default {
     name: 'Playlist',
     components: {

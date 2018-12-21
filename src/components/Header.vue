@@ -11,11 +11,17 @@
 </template>
 
 <script>
+/**
+ * 头部区域
+ * @prop {Number} left 左边图标的type值
+ * @prop {Number} right 右边图标type值
+ * @prop {String} title 标题内容
+ */
 export default {
     name: 'Header',
     props: ['left', 'title', 'right'],
     methods: {
-        op(type) {
+        op(type) { // 图标点击时的操作
             switch(type) {
                 case 23:
                     this.$router.go(-1)

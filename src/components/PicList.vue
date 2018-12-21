@@ -16,6 +16,14 @@
 <script>
 let defaultSize = '40rem'
 
+/**
+ * 简要歌曲信息的列表项，左中右分布，中间呈现主题信息；
+ * @prop {String} size 列表项的高度
+ * @slot cover 左边内容区域（一般放封面或序号等）
+ * @slot after 右边内容区域（一般放图标）
+ * @slot title 中间区域的上部区域（一般放歌曲的标题）
+ * @slot info 中间区域的下部区域（一般放歌曲的补充信息，如歌手，专辑等）
+ */
 export default {
     name: 'PicList',
     props: ['size'],

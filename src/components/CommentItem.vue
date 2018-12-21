@@ -26,6 +26,10 @@
 <script>
 import Num from '../util/num'
 
+/**
+ * 一条单独的评论（包括回复对象）
+ * @prop {Object} info 评论信息
+ */
 export default {
     name: 'CommentItem',
     props: ['info'],

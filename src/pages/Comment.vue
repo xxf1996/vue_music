@@ -26,6 +26,9 @@
 <script>
 import CommentItem from '../components/CommentItem'
 
+/**
+ * 评论页，根据路由中meta.type的不同，顶部信息的呈现和交互方式略有不同
+ */
 export default {
     name: 'comment',
     components: {

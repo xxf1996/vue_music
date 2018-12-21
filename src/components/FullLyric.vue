@@ -10,6 +10,11 @@
 </template>
 
 <script>
+/**
+ * 全屏滚动歌词
+ * @prop {Array} lrc 歌词信息数组，数组元素为每行歌词（对象）
+ * @prop {Number} cur 当前播放进度对应哪一句歌词的索引
+ */
 export default {
     name: 'FullLyric',
     props: ['lrc', 'cur'],

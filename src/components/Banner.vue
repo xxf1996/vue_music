@@ -11,6 +11,9 @@
 </template>
 
 <script>
+/**
+ * 首页banner轮播
+ */
 export default {
     name: 'Banner',
     data() {
