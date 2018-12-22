@@ -27,6 +27,10 @@ export default new Router({
             component: () => import(/* webpackChunkName: "playlist" */ './pages/PlayList')
         },
         {
+            path: '/album/:id',
+            component: () => import(/* webpackChunkName: "album" */ './pages/Album')
+        },
+        {
             path: '/full',
             name: 'full',
             component: () => import(/* webpackChunkName: "full" */ './pages/Full')

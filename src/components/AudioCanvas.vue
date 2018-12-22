@@ -31,45 +31,75 @@ export default {
     methods: {
         toComment() {
             this.$router.push(`/comment/song/${this.song}`)
+        },
+        normal(n) { // 归一化值至[5, 60]区间
+            return n / 255 * 50 + 5
         }
     },
     mounted() {
+        let dpr = window.devicePixelRatio // 因为canvas实际上就是一个位图，因此当设备dpr > 1时，会出现模糊
         let rem = parseFloat(document.documentElement.style.fontSize)
-        let w = rem * 360
         let can = document.getElementById('can')
         let ctx = can.getContext('2d')
+        let b = ctx.backingStorePixelRatio ||
+        ctx.webkitBackingStorePixelRatio ||
+        ctx.mozBackingStorePixelRatio ||
+        ctx.msBackingStorePixelRatio ||
+        ctx.oBackingStorePixelRatio || 1
+        // let unit = rem * dpr / b
+        // let styleW = Math.round(360 * rem)
+        // let w = styleW * dpr
+        let unit = 1
+        let styleW = Math.round(360 * rem)
+        let w = styleW
         let [analyser, player] = [this.analyser, this.$player]
         let center = w / 2
-        let arr = new Uint8Array(analyser.frequencyBinCount)
+        let count = analyser.frequencyBinCount
+        let simple = 96 // 频率取样数
+        let k = count / simple
+        let arr = new Uint8Array(count) // Uint8Array每个元素范围为0~255的整数
         let pi = Math.PI
+        let lineW = 3 * unit
         
         can.width = w
         can.height = w
+        can.style.width = styleW + 'px'
+        can.style.height = styleW + 'px'
         ctx.strokeStyle = "#39f"
         ctx.fillStyle = "#39f"
+        analyser.minDecibels = -90
+        analyser.maxDecibels = -10
+
+        function line(ang, len) {
+            let [sx, sy] = [center + 100 * unit * Math.cos(ang), center + 100 * unit * Math.sin(ang)] // 中心点外的圆弧
+            ctx.beginPath()
+            ctx.moveTo(sx, sy)
+            ctx.lineTo(sx + len * Math.cos(ang), sy + len * Math.sin(ang))
+            ctx.stroke()
+        }
+
+        function dot() {
+            for(let i = 0; i < simple; i++){
+                ctx.beginPath()
+                let angle = i / simple * 2 * pi
+                ctx.arc(center + 100 * unit * Math.cos(angle), center + 100 * unit * Math.sin(angle), lineW / 2, 0, lineW / 2 * pi)
+                ctx.closePath()
+                ctx.fill()
+            }
+        }
 
         function draw(){
-            ctx.clearRect(0, 0, w, w)
-            if(player.paused){
-                for(let i = 0; i < 64; i++){
-                    ctx.beginPath()
-                    let angle = i / 32 * pi
-                    ctx.arc(center + 100 * rem * Math.cos(angle), center + 100 * rem * Math.sin(angle), 2, 0, 2 * pi)
-                    ctx.closePath()
-                    ctx.fill()
-                }
-            }else{
+            if(!player.paused){
+                ctx.clearRect(0, 0, w, w)
                 analyser.getByteFrequencyData(arr)
                 ctx.lineCap = "round"
-                ctx.lineWidth = 4
-                for(let i = 0; i < 64; i++){
-                    let angle = i / 32 * pi
-                    let [sx, sy] = [center + 100 * rem * Math.cos(angle), center + 100 * rem * Math.sin(angle)]
-                    let len = arr[i * 16] / 3
-                    ctx.beginPath()
-                    ctx.moveTo(sx, sy)
-                    ctx.lineTo(sx + len * Math.cos(angle), sy + len * Math.sin(angle))
-                    ctx.stroke()
+                ctx.lineWidth = lineW
+                debugger
+                for(let i = 0; i < simple; i++){
+                    let angle = i / simple * 2 * pi
+                    let len = arr[parseInt(i * k * 0.6)] / 255 * 45 * unit // 归一化值至[0, 45]区间
+                    
+                    line(angle, len)
                 }
             }
         }

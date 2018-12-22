@@ -38,7 +38,7 @@
         </section>
         <InfoList :show.sync="showOp">
             <p class="op-title text-more" slot="title">歌曲：{{songName}}</p>
-            <SongOp :info="songInfo" slot="content" />
+            <SongOp :info="songInfo" slot="content" @hide="hideOp" />
         </InfoList>
     </section>
 </template>
@@ -52,11 +52,12 @@ import SongOp from './SongOp'
  * 歌单或专辑的详情页（头部信息 + 歌曲列表）
  * @prop {Array} list 歌曲列表
  * @prop {String} cover 封面图片地址
+ * @prop {String} comment 对应评论的路由
  * @slot info 头部信息内容区域
  */
 export default {
     name: 'ListDetail',
-    props: ['list', 'cover'],
+    props: ['list', 'cover', 'comment'],
     components: {
         PicList,
         SongOp,
@@ -86,7 +87,7 @@ export default {
             this.$store.commit('changeBottom', true)
         },
         toComment() {
-            this.$router.push(`/comment/list/${this.info.id}`)
+            this.$router.push(this.comment)
         },
         singer(arr) {
             return arr.map(item => item.name).join(',')
@@ -95,6 +96,9 @@ export default {
             this.songName = info.name
             this.songInfo = info
             this.showOp = true
+        },
+        hideOp() {
+            this.showOp = false
         }
     }
 }

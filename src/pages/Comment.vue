@@ -41,7 +41,8 @@ export default {
             cover: null,
             title: '',
             singer: '',
-            count: 0
+            count: 0,
+            info: {}
         }
     },
     computed: {
@@ -65,14 +66,26 @@ export default {
             this.singer = data.ar.map(a => a.name).join(',')
         },
         toTarget() {
+            let path = ''
+
             switch(this.type) {
-                case 'song':
+                case 'song': // 单曲
+                    if(this.id != this.songInfo.id) { // 加入至播放列表，并播放进入全屏播放器
+                        this.$store.dispatch('playNext', this.info)
+                        this.$store.dispatch('toggleSong', 1)
+                    }
+                    path = '/full'
                     break;
-                case 'album':
+                case 'album': // 专辑
+                    path = `/album/${this.id}`
+                    break;
+                case 'list': // 歌单
+                    path = `/playlist/${this.id}`
                     break;
                 default:
                     break;
             }
+            this.$router.push(path)
         }
     },
     created() {
@@ -87,6 +100,7 @@ export default {
                             ids: this.id
                         }).then(res => {
                             if(res.data.code === 200) {
+                                this.info = res.data.songs[0]
                                 this.getInfo(res.data.songs[0])
                             }
                         }) 
@@ -103,6 +117,17 @@ export default {
                             }
                         })
                         break;
+                    case 'album':
+                        this.$req('/album', {
+                            id: this.id
+                        }).then(res => {
+                            if(res.data.code === 200) {
+                                let info = res.data.album
+                                this.cover = info.picUrl
+                                this.title = info.name
+                                this.singer = info.artist.name
+                            }
+                        })
                     default:
                         break;
                 }

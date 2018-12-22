@@ -85,20 +85,7 @@ export default {
             this.$store.commit('changePlaying', false)
         })
         this.$player.addEventListener('ended', () => { // audio播放结束事件
-            let next = this.curSong
-            let len = this.list.length
-
-            switch(this.$store.state.playMode) { // 自动播放模式
-                case 'loop':
-                    next = (next + 1) % len
-                    break;
-                default:
-                    break;
-            }
-
-            if(next !== this.curSong){
-                this.$store.commit('changeCur', next)
-            }
+            this.$store.dispatch('toggleSong', 1) // 自动播放下一曲
         })
 
         let AudioContext = window.AudioContext || window.webkitAudioContext
@@ -111,40 +98,37 @@ export default {
     },
     watch: {
         song(val, old) { // 监听歌曲信息的变化，一旦变化立即请求歌曲的url进行切换
-            this.$req('/song/url', { // 请求歌曲url
-                id: val.id,
-                br: '128000' // 码率，128K
-            }).then(res => {
-                if(res.data.code === 200) {
-                    this.$player.src = res.data.data[0].url
-                    this.$player.play()
-                }
-            }).catch(err => {
-                throw err
-            })
-
-            this.$req('/lyric', { // 请求歌词信息（包括普通歌词，翻译歌词以及卡拉ok歌词）
-                id: val.id
-            }).then(res => {
-                if(res.data.code === 200) {
-                    if(res.data.nolyric){
-                        this.$store.commit('changeLyric', false)
-                    }else{
-                        this.$store.commit('changeLyric', res.data.lrc.lyric)
+            if(val.id !== old.id) {
+                this.$req('/song/url', { // 请求歌曲url
+                    id: val.id,
+                    br: '128000' // 码率，128K
+                }).then(res => {
+                    if(res.data.code === 200) {
+                        this.$player.src = res.data.data[0].url
+                        this.$player.play()
                     }
-                }
-            })
+                }).catch(err => {
+                    throw err
+                })
+
+                this.$req('/lyric', { // 请求歌词信息（包括普通歌词，翻译歌词以及卡拉ok歌词）
+                    id: val.id
+                }).then(res => {
+                    if(res.data.code === 200) {
+                        if(res.data.nolyric){
+                            this.$store.commit('changeLyric', false)
+                        }else{
+                            this.$store.commit('changeLyric', res.data.lrc.lyric)
+                        }
+                    }
+                })
+            }
         }
     }
 }
 </script>
 
 <style>
-    body{
-        margin: 0;
-        padding: 0;
-        font-size: 14px;
-    }
     #app{
         display: flex;
         flex-flow: column nowrap;

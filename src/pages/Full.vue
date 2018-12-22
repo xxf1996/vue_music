@@ -133,20 +133,7 @@ export default {
             this.$player.pause()
         },
         toggleSong(d) {
-            let next = this.curSong
-            let len = this.list.length
-
-            switch(this.playMode) { // 播放模式
-                case 'loop':
-                    next = (next + d) % len
-                    break;
-                default:
-                    break;
-            }
-
-            if(next !== this.curSong){
-                this.$store.commit('changeCur', next)
-            }
+            this.$store.dispatch('toggleSong', d)
         },
         timePoint(e) { // 歌曲进度条跳转
             this.$player.currentTime = this.$player.duration * e.offsetX / this.barWidth

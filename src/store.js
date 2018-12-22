@@ -63,6 +63,54 @@ export default new Vuex.Store({
     getters: {
         songInfo(state) { // 正在播放的歌曲信息
             return state.listInfo[state.curSong] || {}
+        },
+        listKey(state) { // 歌曲列表的id组成的set
+            return new Set(state.listInfo.map(item => item.id))
+        }
+    },
+    actions: {
+        playNext(ctx, info) { // 将该歌曲设置为下一首播放
+            let key = ctx.getters.listKey
+            let {listInfo, curSong} = ctx.state
+
+            if(key.has(info.id)) { // 加入的歌曲是否已存在与当前播放列表中
+
+            }else{
+                let arr = []
+                if(listInfo.length === 0) { // 没有播放列表时
+                    arr.push(info)
+                    ctx.commit('changeBottom', true)
+                }else{
+                    if(curSong === listInfo.length - 1) {
+                        arr = [...listInfo, info]
+                    }else{
+                        arr = [...listInfo.slice(0, curSong + 1), info, ...listInfo.slice(curSong + 1)]
+                    }
+                }
+                ctx.commit('changeList', arr)
+            }
+        },
+        /**
+         * 切换当前播放列表中的歌曲，上一曲或下一曲
+         * @param {$store} ctx vuex的store对象 
+         * @param {Number} d  切换的变化量（索引）
+         */
+        toggleSong(ctx, d) {
+            let cur = ctx.state.curSong
+            let next = cur
+            let len = ctx.state.listInfo.length
+
+            switch(ctx.state.playMode) { // 播放模式
+                case 'loop': // 列表循环
+                    next = (len + cur + d) % len
+                    break;
+                default:
+                    break;
+            }
+
+            if(next !== cur) {
+                ctx.commit('changeCur', next)
+            }
         }
     }
 })
