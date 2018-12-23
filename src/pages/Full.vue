@@ -16,17 +16,17 @@
                 <span class="time-total">{{totalTime}}</span>
             </section>
             <section class="control">
-                <Icon type="14" size="32rem" />
-                <Icon type="11" size="48rem" @click.native="toggleSong(-1)" />
-                <Icon v-show="playing" type="12" size="48rem" @click.native="pause" />
-                <Icon v-show="!playing" type="8" size="48rem" @click.native="play(null)" />
-                <Icon type="9" size="48rem" @click.native="toggleSong(1)" />
-                <Icon type="1" size="32rem" @click.native="showList"/>
+                <Icon type="14" :size="setRem(32)" />
+                <Icon type="11" :size="setRem(48)" @click.native="toggleSong(-1)" />
+                <Icon v-show="playing" type="12" :size="setRem(48)" @click.native="pause" />
+                <Icon v-show="!playing" type="8" :size="setRem(48)" @click.native="play(null)" />
+                <Icon type="9" :size="setRem(48)" @click.native="toggleSong(1)" />
+                <Icon type="1" :size="setRem(32)" @click.native="showList"/>
             </section>
         </section>
         <InfoList class="list" :show.sync="showPlaylist">
             <p class="list-title" slot="title">
-                <Icon type="14" size="24rem" />
+                <Icon type="14" :size="setRem(24)" />
                 当前播放
             </p>
             <section class="list-content" slot="content">
@@ -203,11 +203,19 @@ export default {
                 if(data[len - 1].time < t) idx = len - 1
                 this.curLine = idx
             }
+        },
+        initPage() { // 设置页面标题等信息
+            this.$store.dispatch('setPage', {
+                left: '23',
+                right: '24',
+                title: this.info.name
+            })
         }
     },
     created() {
         if(this.info.id){
             this.parseLyric()
+            this.initPage()
             this.$store.commit('changeBottom', false)
             this.$store.commit('changeBg', 'transparent')
             this.totalTime = this.formatTime(this.$player.duration)
@@ -266,7 +274,7 @@ export default {
         flex: 1;
     }
     .full-btn{
-        height: 100rem;
+        height: rem(100);
     }
     .process{
         box-sizing: border-box;
@@ -274,34 +282,34 @@ export default {
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
-        height: 30rem;
+        height: rem(30);
         font-size: 11px;
     }
     .time-cur{
         display: inline-block;
-        width: 40rem;
+        width: rem(40);
         text-align: right;
         color: #f6f6f6;
     }
     .time-total{
         display: inline-block;
-        width: 40rem;
+        width: rem(40);
         color: #ccc;
     }
     #bar{
         position: relative;
         flex: 1;
-        height: 10rem;
-        margin: 0 10rem;
+        height: rem(10);
+        margin: 0 rem(10);
     }
     .bar-bg{
         position: absolute;
         top: 0;
         bottom: 0;
-        height: 3rem;
+        height: rem(3);
         width: 100%;
         margin: auto;
-        border-radius: 1.5rem;
+        border-radius: rem(1.5);
         background-color: #ccc;
     }
     .bar-cur{
@@ -309,9 +317,9 @@ export default {
         top: 0;
         bottom: 0;
         left: 0;
-        height: 3rem;
+        height: rem(3);
         margin: auto;
-        border-radius: 1.5rem;
+        border-radius: rem(1.5);
         background-color: $theme_bg;
     }
     .bar-tip{
@@ -319,15 +327,15 @@ export default {
         top: 0;
         bottom: 0;
         left: 0;
-        width: 10rem;
-        height: 10rem;
-        margin: auto auto auto -5rem;
+        width: rem(10);
+        height: rem(10);
+        margin: auto auto auto rem(-5);
         border-radius: 50%;
         background-color: #fff;
     }
     .control{
         box-sizing: border-box;
-        height: 70rem;
+        height: rem(70);
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-around;
@@ -336,19 +344,19 @@ export default {
     }
     .list-title{
         margin: 0;
-        line-height: 40rem;
+        line-height: rem(40);
         text-indent: 1em;
     }
     .list-content{
         box-sizing: border-box;
-        padding: 0 8rem;
+        padding: 0 rem(8);
         overflow: hidden;
     }
     .item{
         box-sizing: border-box;
         margin: 0;
-        height: 40rem;
-        line-height: 40rem;
+        height: rem(40);
+        line-height: rem(40);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;

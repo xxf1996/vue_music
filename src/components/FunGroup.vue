@@ -43,25 +43,25 @@ export default {
 <style lang="scss" scoped>
     .fun{
         box-sizing: border-box;
-        padding: 12rem 8rem;
+        padding: rem(12) rem(8);
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-around;
         border-bottom: 1px solid #ddd;
     }
     .fun-item{
-        width: 70rem;
+        width: rem(70);
     }
     .fun-container{
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 40rem;
-        height: 40rem;
-        margin: 10rem auto;
+        width: rem(40);
+        height: rem(40);
+        margin: rem(10) auto;
         border-radius: 50%;
         background-color: $theme_bg;
-        box-shadow: 0 0 5rem lighten($theme_bg, 15%);
+        box-shadow: 0 0 rem(5) lighten($theme_bg, 15%);
     }
     .fun-icon{
         color: $theme_text;

@@ -1,7 +1,7 @@
 <template>
     <section class="op-list">
-        <PicList class="op-item" size="40rem" v-for="(item, i) in op" :key="i" @click.stop.native="item.event" v-show="item.show">
-            <Icon class="op-icon" :type="item.type" size="24rem" slot="cover"/>
+        <PicList class="op-item" :size="setRem(40)" v-for="(item, i) in op" :key="i" @click.stop.native="item.event" v-show="item.show">
+            <Icon class="op-icon" :type="item.type" :size="setRem(24)" slot="cover"/>
             <p class="op-text" slot="title">{{item.content}}</p>
         </PicList>
     </section>
@@ -81,14 +81,14 @@ export default {
 
 <style lang="scss" scoped>
     .op-item{
-        margin-bottom: 5rem;
+        margin-bottom: rem(5);
     }
     .op-icon{
         color: $theme_bg;
     }
     .op-text{
         margin: 0;
-        height: 40rem;
-        line-height: 40rem;
+        height: rem(40);
+        line-height: rem(40);
     }
 </style>

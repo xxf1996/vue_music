@@ -14,8 +14,6 @@
 </template>
 
 <script>
-let defaultSize = '40rem'
-
 /**
  * 简要歌曲信息的列表项，左中右分布，中间呈现主题信息；
  * @prop {String} size 列表项的高度
@@ -27,6 +25,11 @@ let defaultSize = '40rem'
 export default {
     name: 'PicList',
     props: ['size'],
+    data() {
+        return {
+            defaultSize: this.setRem(40)
+        }
+    },
     computed: {
         itemStyle() {
             return {
@@ -38,7 +41,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .item{
         box-sizing: border-box;
         display: flex;
@@ -48,7 +51,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 6rem;
+        margin-right: rem(6);
     }
     .text{
         box-sizing: border-box;

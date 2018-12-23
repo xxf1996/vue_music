@@ -7,3 +7,7 @@ $theme_bg2: #fa541c;
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+@function rem($n) { // 将px转为rem（默认设计稿为375px = 10rem）
+    @return $n / 37.5 + rem; // 注意数字加单位进行运算时，编译后的数字与单位间会有空格！如：30 / 10rem => 3 rem
+}

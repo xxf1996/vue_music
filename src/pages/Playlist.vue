@@ -52,11 +52,17 @@ export default {
     methods: {
         singer(arr) {
             return arr.map(item => item.name).join(',')
+        },
+        initPage() {
+            this.$store.dispatch('setPage', {
+                left: '23',
+                right: '15',
+                title: '歌单'
+            })
         }
     },
     created() {
-        this.$store.commit('changeTitle', '歌单')
-        this.$store.commit('changeLeft', 23)
+        this.initPage()
         this.$req('/playlist/detail', {
             id: this.$route.params.id
         }).then(res => {
@@ -70,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .playlist{
         position: relative;
     }
@@ -78,14 +84,14 @@ export default {
         box-sizing: border-box;
         display: flex;
         flex-flow: row nowrap;
-        height: 120rem;
-        padding: 10rem;
+        height: rem(120);
+        padding: rem(10);
         color: #fff;
     }
     .cover{
         position: relative;
-        width: 100rem;
-        height: 100rem;
+        width: rem(100);
+        height: rem(100);
     }
     .cover-img{
         width: 100%;
@@ -99,17 +105,17 @@ export default {
         margin: 0;
         font-size: 12px;
         text-align: right;
-        padding: 1rem;
+        padding: rem(1);
         background-color: rgba(0, 0, 0, 0.3);
     }
     .about{
         flex: 1;
-        margin-left: 10rem;
+        margin-left: rem(10);
         height: 100%;
     }
     .about-title{
         font-size: 16px;
-        margin: 6rem 0;
+        margin: rem(6) 0;
     }
     .about-author{
         font-size: 12px;

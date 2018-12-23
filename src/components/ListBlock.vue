@@ -13,7 +13,6 @@
 
 <script>
 import Num from '../util/num'
-let defaultSize = '110rem'
 
 /**
  * 首页歌单或专辑等块状图片区域，点击后可进入详情页
@@ -23,16 +22,21 @@ let defaultSize = '110rem'
 export default {
     name: 'ListBlock',
     props: ['size', 'info'],
+    data() {
+        return {
+            defaultSize: this.setRem(110)
+        }
+    },
     computed: {
         cover() {
             return {
-                width: this.size || defaultSize,
-                height: this.size || defaultSize
+                width: this.size || this.defaultSize,
+                height: this.size || this.defaultSize
             }
         },
         blockSize() {
             return {
-                width: this.size || defaultSize
+                width: this.size || this.defaultSize
             }
         },
         count() {
@@ -47,14 +51,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .block{
-        margin: 6rem 0;
+        margin: rem(6) 0;
         font-size: 12px;
     }
     .cover-container{
         position: relative;
-        border-radius: 5rem;
+        border-radius: rem(5);
         overflow: hidden;
     }
     .cover-img{
@@ -69,12 +73,12 @@ export default {
         margin: 0;
         font-size: 12px;
         text-align: right;
-        padding: 1rem;
+        padding: rem(1);
         background-color: rgba(0, 0, 0, 0.3);
         color: #fff;
     }
     .block-title{
-        margin: 5rem 0;
+        margin: rem(5) 0;
         line-height: 1.414;
     }
 </style>

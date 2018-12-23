@@ -51,8 +51,8 @@ export default {
         BottomPlayer
     },
     methods: {
-        rem(size = 375) {
-            document.documentElement.style.fontSize = document.documentElement.clientWidth / size + 'px'
+        rem(num = 10) { // num代表将屏幕宽度分为多少份rem
+            document.documentElement.style.fontSize = document.documentElement.clientWidth / num + 'px'
         }
     },
     created() {
@@ -69,7 +69,7 @@ export default {
                     uid
                 }).then(res => {
                     if(res.data.code === 200){
-                        this.$store.commit('changeInfo', res.data.profile)
+                        this.$store.commit('changeInfo', res.data)
                     }
                 }).catch(err => {
                     throw err

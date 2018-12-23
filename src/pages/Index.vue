@@ -25,30 +25,43 @@ export default {
     computed: {
         userInfo() {
             return this.$store.state.userInfo
+        },
+        pageInfo() {
+            return {
+                left: 1,
+                right: 15,
+                title: (this.userInfo.profile || {}).nickname
+            }
         }
     },
     methods: {
         changeTab(val) {
             this.$router.push({name: this.tab[val]})
+        },
+        initPage() {
+            this.$store.dispatch('setPage', this.pageInfo)
         }
     },
     created() {
         this.changeTab(this.curTab)
         if(this.userInfo.nickname){
-            this.$store.commit('changeTitle', this.userInfo.nickname)
+            this.initPage()
         }
     },
+    activated() { // keep-alive组件激活时运行
+        this.initPage()
+    },
     watch: {
-        userInfo(nVal, oVal){
-            this.$store.commit('changeTitle', nVal.nickname)
+        userInfo(val){
+            this.initPage()
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .index-tab{
-        height: 40rem;
+        height: rem(40);
     }
     .tab-item{
         font-size: 14px;

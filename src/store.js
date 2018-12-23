@@ -111,6 +111,12 @@ export default new Vuex.Store({
             if(next !== cur) {
                 ctx.commit('changeCur', next)
             }
+        },
+        setPage(ctx, info) {
+            let {left = 23, right = 15, title = ''} = info
+            ctx.commit('changeLeft', left)
+            ctx.commit('changeRight', right)
+            ctx.commit('changeTitle', title)
         }
     }
 })

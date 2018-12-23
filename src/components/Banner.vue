@@ -36,7 +36,7 @@ export default {
 <style scoped lang="scss">
     .banner{
         position: relative;
-        padding: 6rem 0;
+        padding: rem(6) 0;
     }
     .banner-bg{
         position: absolute;
@@ -47,21 +47,21 @@ export default {
         background-color: $theme_bg;
     }
     .banner-container{
-        width: 360rem;
-        height: 133.3rem;
+        width: rem(360);
+        height: rem(133.3);
         margin:0 auto;
     }
     .banner-img{
         width: 100%;
-        border-radius: 5rem;
+        border-radius: rem(5);
     }
     .banner-type{
         position: absolute;
         right: 0;
         bottom: 0;
         font-size: 12px;
-        padding: 3rem 5rem;
+        padding: rem(3) rem(5);
         color: #fff;
-        border-radius: 5rem;
+        border-radius: rem(5);
     }
 </style>

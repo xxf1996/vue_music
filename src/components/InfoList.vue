@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .mask{
         position: fixed;
         left: 0;
@@ -57,13 +57,13 @@ export default {
         display: flex;
         flex-flow: column nowrap;
         background-color: #fff;
-        border-top-left-radius: 10rem;
-        border-top-right-radius: 10rem;
+        border-top-left-radius: rem(10);
+        border-top-right-radius: rem(10);
         overflow: hidden;
     }
     .title{
         box-sizing: border-box;
-        flex-basis: 40rem;
+        flex-basis: rem(40);
         border-bottom: 1px solid #ddd;
     }
     .content{

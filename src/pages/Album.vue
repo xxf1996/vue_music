@@ -67,7 +67,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .album{
         position: relative;
     }
@@ -75,14 +75,14 @@ export default {
         box-sizing: border-box;
         display: flex;
         flex-flow: row nowrap;
-        height: 120rem;
-        padding: 10rem;
+        height: rem(120);
+        padding: rem(10);
         color: #fff;
     }
     .cover{
         position: relative;
-        width: 100rem;
-        height: 100rem;
+        width: rem(100);
+        height: rem(100);
     }
     .cover-img{
         width: 100%;
@@ -90,16 +90,16 @@ export default {
     }
     .about{
         flex: 1;
-        margin-left: 10rem;
+        margin-left: rem(10);
         height: 100%;
     }
     .about-title{
         font-size: 16px;
-        margin: 6rem 0;
+        margin: rem(6) 0;
     }
     .about-author, .about-date{
         font-size: 12px;
-        margin: 3rem 0;
+        margin: rem(3) 0;
         color: #eee;
     }
 </style>

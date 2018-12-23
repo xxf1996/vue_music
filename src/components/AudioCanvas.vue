@@ -5,8 +5,8 @@
             <canvas id="can"></canvas>
         </section>
         <section class="func">
-            <Icon class="func-btn" type="26" size="24rem" @click.native="toComment" />
-            <Icon class="func-btn" type="27" size="24rem" />
+            <Icon class="func-btn" type="26" :size="setRem(24)" @click.native="toComment" />
+            <Icon class="func-btn" type="27" :size="setRem(24)" />
         </section>
     </section>
 </template>
@@ -49,9 +49,8 @@ export default {
         // let unit = rem * dpr / b
         // let styleW = Math.round(360 * rem)
         // let w = styleW * dpr
-        let unit = 1
-        let styleW = Math.round(360 * rem)
-        let w = styleW
+        let unit = rem / 37.5
+        let w = 360 * unit
         let [analyser, player] = [this.analyser, this.$player]
         let center = w / 2
         let count = analyser.frequencyBinCount
@@ -63,8 +62,8 @@ export default {
         
         can.width = w
         can.height = w
-        can.style.width = styleW + 'px'
-        can.style.height = styleW + 'px'
+        can.style.width = this.setRem(360)
+        can.style.height = this.setRem(360)
         ctx.strokeStyle = "#39f"
         ctx.fillStyle = "#39f"
         analyser.minDecibels = -90
@@ -94,7 +93,7 @@ export default {
                 analyser.getByteFrequencyData(arr)
                 ctx.lineCap = "round"
                 ctx.lineWidth = lineW
-                debugger
+                // debugger
                 for(let i = 0; i < simple; i++){
                     let angle = i / simple * 2 * pi
                     let len = arr[parseInt(i * k * 0.6)] / 255 * 45 * unit // 归一化值至[0, 45]区间
@@ -120,7 +119,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     @keyframes rotate{
         0%{
             transform: rotate(0deg);
@@ -144,7 +143,7 @@ export default {
     }
     .func{
         display: flex;
-        height: 40rem;
+        height: rem(40);
         flex-flow: row nowrap;
         align-items: center;
         justify-content: space-around;
@@ -159,8 +158,8 @@ export default {
         top: 0;
         bottom: 0;
         margin: auto;
-        width: 180rem;
-        height: 180rem;
+        width: rem(180);
+        height: rem(180);
         border-radius: 50%;
         animation: rotate 15s linear infinite;
     }

@@ -56,12 +56,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .lyric{
         position: relative;
         box-sizing: border-box;
         height: 100%;
-        padding: 0 12rem;
+        padding: 0 rem(12);
         overflow-x: hidden;
         overflow-y: auto;
     }
@@ -83,7 +83,7 @@ export default {
     }
     .line{
         margin: 0;
-        padding: 8rem 5rem;
+        padding: rem(8) rem(5);
         text-align: center;
         color: #ddd;
     }

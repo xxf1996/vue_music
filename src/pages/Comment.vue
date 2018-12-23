@@ -6,7 +6,7 @@
                 <p class="title">{{title}}</p>
                 <p class="singer">{{singer}}</p>
             </section>
-            <Icon class="mark" type="25" size="20rem" />
+            <Icon class="mark" type="25" :size="setRem(20)" />
         </section>
         <section class="hot" v-if="haveHot">
             <p class="tip">精彩评论</p>
@@ -86,11 +86,19 @@ export default {
                     break;
             }
             this.$router.push(path)
+        },
+        initPage() {
+            this.$store.dispatch('setPage', {
+                left: '23',
+                right: '24',
+                title: '评论'
+            })
         }
     },
     created() {
         if(this.type) {
             //debugger
+            this.initPage()
             if(this.songInfo.id && this.type === 'song' && this.id == this.songInfo.id){ // 判断是否为当前播放歌曲，避免重新请求数据
                 this.getInfo(this.songInfo)
             }else{
@@ -155,23 +163,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .comment{
         background-color: #fff;
     }
     .target{
         box-sizing: border-box;
-        height: 60rem;
-        padding: 5rem;
+        height: rem(60);
+        padding: rem(5);
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
     }
     .cover{
-        width: 50rem;
-        height: 50rem;
-        border-radius: 5rem;
-        margin-right: 5rem;
+        width: rem(50);
+        height: rem(50);
+        border-radius: rem(5);
+        margin-right: rem(5);
     }
     .mark{
         color: #999;
@@ -181,25 +189,25 @@ export default {
     }
     .title{
         margin: 0;
-        padding: 0 5rem;
+        padding: 0 rem(5);
     }
     .singer{
         margin: 0;
-        padding: 0 5rem;
+        padding: 0 rem(5);
         font-size: 12px;
         color: #36f;
     }
     .tip{
         margin: 0;
-        padding: 2rem 5rem;
+        padding: rem(2) rem(5);
         background-color: #eee;
         font-size: 12px;
     }
     .comment-container{
         box-sizing: border-box;
-        padding: 3rem 0;
+        padding: rem(3) 0;
     }
     .comment-item{
-        margin-bottom: 5rem;
+        margin-bottom: rem(5);
     }
 </style>

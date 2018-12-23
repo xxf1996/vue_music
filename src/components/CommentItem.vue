@@ -11,7 +11,7 @@
                 </div>
                 <div class="user-like">
                     {{info.likedCount}}
-                    <Icon type="28" size="16rem" />
+                    <Icon type="28" :size="setRem(16)" />
                 </div>
             </section>
             <p class="content">{{info.content}}</p>
@@ -47,16 +47,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .item{
         display: flex;
         flex-flow: row nowrap;
     }
     .cover-img{
-        width: 30rem;
-        height: 30rem;
+        width: rem(30);
+        height: rem(30);
         border-radius: 50%;
-        margin: 0 5rem;
+        margin: 0 rem(5);
     }
     .info{
         flex: 1;
@@ -64,7 +64,7 @@ export default {
     }
     .user{
         box-sizing: border-box;
-        height: 30rem;
+        height: rem(30);
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
@@ -74,35 +74,35 @@ export default {
     }
     .name{
         margin: 0;
-        line-height: 18rem;
+        line-height: rem(18);
         font-size: 11px;
     }
     .date{
         margin: 0;
-        line-height: 12rem;
+        line-height: rem(12);
         font-size: 10px;
         color: #aaa;
     }
     .user-like{
         display: inline-block;
         font-size: 12px;
-        padding: 0 5rem;
+        padding: 0 rem(5);
         color: #aaa;
     }
     .content{
         margin: 0;
-        padding: 8rem 0;
+        padding: rem(8) 0;
         font-size: 13px;
     }
     .reply{
         box-sizing: border-box;
-        margin: 5rem 5rem 5rem 0;
-        padding: 5rem;
+        margin: rem(5) rem(5) rem(5) 0;
+        padding: rem(5);
         background-color: #fcfcfc;
         color: #aaa;
         font-size: 13px;
         border: 1px solid #eee;
-        border-radius: 3rem;
+        border-radius: rem(3);
     }
     .at{
         color: #36f;

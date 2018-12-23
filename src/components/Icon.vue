@@ -16,14 +16,14 @@ export default{
     computed: {
         svgStyle() {
             return {
-                fontSize: this.size || '24rem'
+                fontSize: this.size || this.setRem(24)
             }
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .app-icon{
         width: 1em;
         height: 1em;

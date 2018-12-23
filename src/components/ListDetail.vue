@@ -8,30 +8,30 @@
             </section>
             <section class="func">
                 <section class="func-group" @click="toComment">
-                    <Icon type="26" size="20rem" />
+                    <Icon type="26" :size="setRem(20)" />
                     <p class="func-text">评论</p>
                 </section>
                 <section class="func-group">
-                    <Icon type="24" size="20rem" />
+                    <Icon type="24" :size="setRem(20)" />
                     <p class="func-text">分享</p>
                 </section>
             </section>
             <section class="container">
                 <p class="all" @click="play(0)">
                     <section class="all-play">
-                        <Icon type="8" size="20rem" />
+                        <Icon type="8" :size="setRem(20)" />
                     </section>
                     播放全部
                     <span class="all-count">（共{{list.length}}首）</span>
                 </p>
                 <section class="content">
-                    <PicList size="40rem" class="list-item" v-for="(item, i) in list" :key="i" @click.native="play(i)">
+                    <PicList :size="setRem(40)" class="list-item" v-for="(item, i) in list" :key="i" @click.native="play(i)">
                         <span class="list-num" slot="cover">{{i + 1}}</span>
                         <p class="list-title text-more" slot="title">
                             {{item.name + (item.tns? `（${item.tns}）`: '')}}
                         </p>
                         <p class="list-info text-more" slot="info">{{singer(item.ar)}} - {{item.al.name}}</p>
-                        <Icon slot="after" type="27" size="24rem" @click.native.stop="toOp(item)" />
+                        <Icon slot="after" type="27" :size="setRem(24)" @click.native.stop="toOp(item)" />
                     </PicList>
                 </section>
             </section>
@@ -104,7 +104,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .detail{
         position: relative;
     }
@@ -113,20 +113,20 @@ export default {
         top: 0;
         left: 0;
         width: 100%;
-        height: 200rem;
+        height: rem(200);
         overflow: hidden;
         background-size: cover;
         filter: brightness(0.8) blur(20px);
         z-index: -1;
     }
     .loading{
-        height: 200rem;
-        line-height: 200rem;
+        height: rem(200);
+        line-height: rem(200);
         text-align: center;
     }
     .func{
         display: flex;
-        margin: 6rem 0;
+        margin: rem(6) 0;
         flex-flow: row nowrap;
         justify-content: space-around;
         color: #fff;
@@ -134,25 +134,25 @@ export default {
     .func-text{
         font-size: 12px;
         color: #ddd;
-        margin: 5rem 0;
+        margin: rem(5) 0;
     }
     .container{
         background-color: #fff;
-        border-top-left-radius: 10rem;
-        border-top-right-radius: 10rem;
+        border-top-left-radius: rem(10);
+        border-top-right-radius: rem(10);
         overflow: hidden;
     }
     .all{
         box-sizing: border-box;
-        height: 40rem;
-        line-height: 40rem;
+        height: rem(40);
+        line-height: rem(40);
         margin: 0;
         border-bottom: 1px solid #ddd;
     }
     .all-play{
         display: inline-flex;
-        width: 40rem;
-        height: 40rem;
+        width: rem(40);
+        height: rem(40);
         justify-content: center;
         align-items: center;
     }
@@ -160,7 +160,7 @@ export default {
         color: #aaa;
     }
     .list-item{
-        margin-bottom: 6rem;
+        margin-bottom: rem(6);
     }
     .list-num{
         font-size: 16px;
@@ -168,13 +168,13 @@ export default {
     }
     .list-title{
         margin: 0;
-        height: 20rem;
-        line-height: 20rem;
+        height: rem(20);
+        line-height: rem(20);
     }
     .list-info{
         margin: 0;
-        height: 20rem;
-        line-height: 20rem;
+        height: rem(20);
+        line-height: rem(20);
         font-size: 12px;
         color: #aaa;
     }
@@ -186,8 +186,8 @@ export default {
     .op-title{
         box-sizing: border-box;
         margin: 0;
-        padding: 0 5rem;
+        padding: 0 rem(5);
         font-size: 12px;
-        line-height: 40rem;
+        line-height: rem(40);
     }
 </style>

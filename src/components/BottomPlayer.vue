@@ -5,14 +5,14 @@
             <p class="title hide-more">{{song.name}}</p>
             <p class="info hide-more">{{singer()}}</p>
         </section>
-        <Icon v-show="playing" class="icon" type="12" size="24rem" @click.native.stop="pause" />
-        <Icon v-show="!playing" class="icon" type="8" size="24rem" @click.native.stop="play(null)" />
+        <Icon v-show="playing" class="icon" type="12" :size="setRem(24)" @click.native.stop="pause" />
+        <Icon v-show="!playing" class="icon" type="8" :size="setRem(24)" @click.native.stop="play(null)" />
 
-        <Icon class="icon" type="1" size="24rem" @click.native.stop="showList" />
+        <Icon class="icon" type="1" :size="setRem(24)" @click.native.stop="showList" />
 
         <InfoList class="list" :show.sync="showPlaylist">
             <p class="list-title" slot="title">
-                <Icon type="14" size="24rem" />
+                <Icon type="14" :size="setRem(24)" />
                 当前播放
             </p>
             <section class="list-content" slot="content">
@@ -85,7 +85,7 @@ export default {
     .player{
         box-sizing: border-box;
         display: flex;
-        height: 40rem;
+        height: rem(40);
         flex-flow: row nowrap;
         align-items: center;
         border-top: 1px solid #ddd;
@@ -93,10 +93,10 @@ export default {
         overflow: hidden;
     }
     .cover{
-        width: 30rem;
-        height: 30rem;
-        margin: 5rem;
-        border-radius: 3rem;
+        width: rem(30);
+        height: rem(30);
+        margin: rem(5);
+        border-radius: rem(3);
     }
     .text{
         flex: 1;
@@ -106,16 +106,16 @@ export default {
     .title{
         margin: 0;
         font-size: 12px;
-        line-height: 20rem;
+        line-height: rem(20);
     }
     .info{
         margin: 0;
         font-size: 11px;
         color: #aaa;
-        line-height: 20rem;
+        line-height: rem(20);
     }
     .icon{
-        margin: 0 6rem;
+        margin: 0 rem(6);
     }
     .hide-more{ /* 超出一行的部分用省略号替换 */
         overflow: hidden;
@@ -124,19 +124,19 @@ export default {
     }
     .list-title{
         margin: 0;
-        line-height: 40rem;
+        line-height: rem(40);
         text-indent: 1em;
     }
     .list-content{
         box-sizing: border-box;
-        padding: 0 8rem;
+        padding: 0 rem(8);
         overflow: hidden;
     }
     .item{
         box-sizing: border-box;
         margin: 0;
-        height: 40rem;
-        line-height: 40rem;
+        height: rem(40);
+        line-height: rem(40);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: clip;

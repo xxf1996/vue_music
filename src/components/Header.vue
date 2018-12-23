@@ -7,10 +7,12 @@
         <section class="head-right">
             <Icon :type="right" @click.native="op(right)"/>
         </section>
+        <Sider :show.sync="showSide" />
     </section>
 </template>
 
 <script>
+import Sider from './Sider'
 /**
  * 头部区域
  * @prop {Number} left 左边图标的type值
@@ -20,11 +22,22 @@
 export default {
     name: 'Header',
     props: ['left', 'title', 'right'],
+    components: {
+        Sider
+    },
+    data() {
+        return {
+            showSide: false
+        }
+    },
     methods: {
         op(type) { // 图标点击时的操作
-            switch(type) {
-                case 23:
+            switch(Number(type)) {
+                case 23: // 返回
                     this.$router.go(-1)
+                    break;
+                case 1: // 侧边栏
+                    this.showSide = true
                     break;
                 default:
                     break;
@@ -42,7 +55,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    $headHeight: 40rem;
+    $headHeight: rem(40);
     .head{
         flex-basis: $headHeight;
         display: flex;

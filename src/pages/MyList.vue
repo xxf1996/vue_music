@@ -3,21 +3,21 @@
         <Banner/>
         <FunGroup/>
         <section class="list-one">
-            <p class="list-title" @click="showMore(myList, '创建的歌单')">创建的歌单 <Icon type="25" size="16rem"/></p>
+            <p class="list-title" @click="showMore(myList, '创建的歌单')">创建的歌单 <Icon type="25" :size="setRem(16)"/></p>
             <section class="list-container">
-                <ListBlock v-for="(item, i) in myShowList" size="110rem" :info="item" :key="i"/>
+                <ListBlock v-for="(item, i) in myShowList" :size="setRem(110)" :info="item" :key="i"/>
             </section>
         </section>
         <section class="list-one">
-            <p class="list-title" @click="showMore(commend, '推荐歌单')">推荐歌单 <Icon type="25" size="16rem"/></p>
+            <p class="list-title" @click="showMore(commend, '推荐歌单')">推荐歌单 <Icon type="25" :size="setRem(16)"/></p>
             <section class="list-container">
-                <ListBlock v-for="(item, i) in myCommend" size="110rem" :info="item" :key="i"/>
+                <ListBlock v-for="(item, i) in myCommend" :size="setRem(110)" :info="item" :key="i"/>
             </section>
         </section>
         <InfoList class="list-more" :show.sync="more">
             <p class="more-tip" slot="title">{{moreTitle}}</p>
             <section class="more-content" slot="content">
-                <PicList class="more-item" v-for="(list, k) in moreList" size="40rem" :key="k" @click.native="toDetail(list.id)">
+                <PicList class="more-item" v-for="(list, k) in moreList" :size="setRem(40)" :key="k" @click.native="toDetail(list.id)">
                     <img class="more-cover" :src="list.coverImgUrl" :alt="list.name" slot="cover">
                     <p class="more-title" slot="title">{{list.name}}</p>
                     <p class="more-info" slot="info">{{list.trackCount}} 首</p>
@@ -96,14 +96,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .list-one{
         box-sizing: border-box;
-        padding: 12rem 7.5rem;
+        padding: rem(12) rem(7.5);
         text-align: left;
     }
     .list-title{
-        margin: 6rem 0;
+        margin: rem(6) 0;
         font-size: 16px;
     }
     .list-container{
@@ -114,32 +114,32 @@ export default {
     .more-tip{
         margin: 0;
         text-indent: 1em;
-        line-height: 40rem;
+        line-height: rem(40);
     }
     .more-content{
         box-sizing: border-box;
-        padding: 5rem;
+        padding: rem(5);
     }
     .more-item{
-        margin-bottom: 6rem;
+        margin-bottom: rem(6);
     }
     .more-cover{
         width: 100%;
         height: 100%;
-        border-radius: 5rem;
+        border-radius: rem(5);
     }
     .more-title{
         box-sizing: border-box;
         margin: 0;
-        height: 24rem;
-        line-height: 24rem;
+        height: rem(24);
+        line-height: rem(24);
     }
     .more-info{
         box-sizing: border-box;
         margin: 0;
         font-size: 12px;
         color: #aaa;
-        height: 16rem;
-        line-height: 16rem;
+        height: rem(16);
+        line-height: rem(16);
     }
 </style>
