@@ -124,11 +124,23 @@ module.exports = {
             }
         ]
     },
+    optimization: {
+        splitChunks: { // 将一些模块单独分离出来成js文件
+            cacheGroups: {
+                vendor: {
+                    test: /vue|axios/, // 直接使用 test 来做路径匹配
+                    chunks: "initial",
+                    name: "vendor",
+                    enforce: true,
+                },
+            },
+        },
+    },
     resolve: { // 模块解析设置
         extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx', '.css', '.vue'] // 解析引入模块文件时，自动匹配的文件后缀列表
     },
     devServer: { // webpack-dev-server配置
         publicPath: '/',
-        host: '192.168.43.191' // 本机ip，方便局域网内访问调试
+        host: '192.168.0.102' // 本机ip，方便局域网内访问调试
     }
 }

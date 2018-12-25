@@ -1,6 +1,6 @@
 <template>
-    <section v-show="show" class="side" @click.stop="hide">
-        <section class="container" @click.stop="()=>{}">
+    <section v-show="show" class="side" @click.self.stop="hide">
+        <v-touch class="container" @swipeleft="hide">
             <section class="info" :style="bg">
                 <img :src="avatar" alt="user" class="avatar">
                 <p class="user">
@@ -11,11 +11,16 @@
             <section class="setting">
                 暂无
             </section>
-        </section>
+        </v-touch>
     </section>
 </template>
 
 <script>
+/**
+ * 用户信息及设置侧边栏
+ */
+import {print} from '../util/debug'
+
 export default {
     name: 'Sider',
     props: ['show'],
@@ -40,7 +45,7 @@ export default {
     },
     methods: {
         hide() {
-            this.$emit('update:show', false)
+            this.$emit('update:show', false) // v-touch组件不支持.stop和.prevent
         }
     }
 }
