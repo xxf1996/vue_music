@@ -1,24 +1,61 @@
 <template>
-    <section class="head">
+    <section class="head" :style="bg">
         <section class="head-left">
-            <Icon :type="left"/>
+            <Icon :type="left" @click.native="op(left)"/>
         </section>
         <span class="head-title">{{title}}</span>
         <section class="head-right">
-            <Icon :type="right"/>
+            <Icon :type="right" @click.native="op(right)"/>
         </section>
+        <Sider :show.sync="showSide" />
     </section>
 </template>
 
 <script>
+import Sider from './Sider'
+/**
+ * 头部区域
+ * @prop {Number} left 左边图标的type值
+ * @prop {Number} right 右边图标type值
+ * @prop {String} title 标题内容
+ */
 export default {
     name: 'Header',
-    props: ['left', 'title', 'right']
+    props: ['left', 'title', 'right'],
+    components: {
+        Sider
+    },
+    data() {
+        return {
+            showSide: false
+        }
+    },
+    methods: {
+        op(type) { // 图标点击时的操作
+            switch(Number(type)) {
+                case 23: // 返回
+                    this.$router.go(-1)
+                    break;
+                case 1: // 侧边栏
+                    this.showSide = true
+                    break;
+                default:
+                    break;
+            }
+        }
+    },
+    computed: {
+        bg() {
+            return {
+                'background-color': this.$store.state.headBg
+            }
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
-    $headHeight: 40rem;
+    $headHeight: rem(40);
     .head{
         flex-basis: $headHeight;
         display: flex;

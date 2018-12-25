@@ -2,13 +2,17 @@
     <section id="app" :style="full">
         <Header :title="headTitle" :left="left" :right="right" />
         <section class="main">
-            <router-view></router-view>
+            <keep-alive include="Index">
+                <router-view></router-view>
+            </keep-alive>
         </section>
+        <BottomPlayer v-show="showBottom" :song="song" :list="list" />
     </section>
 </template>
 
 <script>
 import Header from './components/Header'
+import BottomPlayer from './components/BottomPlayer'
 
 export default {
     name: 'App',
@@ -28,20 +32,35 @@ export default {
         },
         headTitle() {
             return this.$store.state.headTitle
+        },
+        song() {
+            return this.$store.getters.songInfo
+        },
+        list() {
+            return this.$store.state.listInfo
+        },
+        showBottom() {
+            return this.$store.state.showBottom
+        },
+        curSong() {
+            return this.$store.state.curSong
         }
     },
     components: {
-        Header
+        Header,
+        BottomPlayer
     },
     methods: {
-        rem(size = 375) {
-            document.documentElement.style.fontSize = document.documentElement.clientWidth / size + 'px'
+        rem(num = 10) { // num代表将屏幕宽度分为多少份rem
+            document.documentElement.style.fontSize = document.documentElement.clientWidth / num + 'px'
         }
     },
     created() {
+        // rem适配设置
         this.full.height = window.innerHeight + 'px'
         this.rem()
         window.addEventListener('resize', this.rem)
+        // 判断之前是否『登录』过
         if(this.$store.state.uid === null){
             let uid = sessionStorage.getItem('X_uid')
             if(uid){
@@ -50,7 +69,7 @@ export default {
                     uid
                 }).then(res => {
                     if(res.data.code === 200){
-                        this.$store.commit('changeInfo', res.data.profile)
+                        this.$store.commit('changeInfo', res.data)
                     }
                 }).catch(err => {
                     throw err
@@ -59,16 +78,57 @@ export default {
                 this.$router.push({name: 'login'})
             }
         }
+        this.$player.addEventListener('playing', () => {
+            this.$store.commit('changePlaying', true)
+        })
+        this.$player.addEventListener('pause', () => {
+            this.$store.commit('changePlaying', false)
+        })
+        this.$player.addEventListener('ended', () => { // audio播放结束事件
+            this.$store.dispatch('toggleSong', 1) // 自动播放下一曲
+        })
+
+        let AudioContext = window.AudioContext || window.webkitAudioContext
+        let ctx = new AudioContext()
+        let source = ctx.createMediaElementSource(this.$player)
+        let analyser = ctx.createAnalyser()
+        source.connect(analyser)
+        analyser.connect(ctx.destination)
+        this.$store.commit('changeAnalyser', analyser)
+    },
+    watch: {
+        song(val, old) { // 监听歌曲信息的变化，一旦变化立即请求歌曲的url进行切换
+            if(val.id !== old.id) {
+                this.$req('/song/url', { // 请求歌曲url
+                    id: val.id,
+                    br: '128000' // 码率，128K
+                }).then(res => {
+                    if(res.data.code === 200) {
+                        this.$player.src = res.data.data[0].url
+                        this.$player.play()
+                    }
+                }).catch(err => {
+                    throw err
+                })
+
+                this.$req('/lyric', { // 请求歌词信息（包括普通歌词，翻译歌词以及卡拉ok歌词）
+                    id: val.id
+                }).then(res => {
+                    if(res.data.code === 200) {
+                        if(res.data.nolyric){
+                            this.$store.commit('changeLyric', false)
+                        }else{
+                            this.$store.commit('changeLyric', res.data.lrc.lyric)
+                        }
+                    }
+                })
+            }
+        }
     }
 }
 </script>
 
 <style>
-    body{
-        margin: 0;
-        padding: 0;
-        font-size: 14px;
-    }
     #app{
         display: flex;
         flex-flow: column nowrap;
@@ -77,5 +137,8 @@ export default {
         flex: 1;
         overflow-x: hidden;
         overflow-y: auto;
+    }
+    #player{
+        display: none;
     }
 </style>

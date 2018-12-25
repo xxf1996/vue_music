@@ -8,6 +8,9 @@
 </template>
 
 <script>
+/**
+ * 『伪』登录页
+ */
 export default {
     name: 'Login',
     data() {
@@ -50,10 +53,10 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 240rem;
+        width: rem(240);
     }
     .login-btn{
-        margin: 12rem 0;
+        margin: rem(12) 0;
         text-align: center;
     }
     .login-enter{

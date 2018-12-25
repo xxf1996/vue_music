@@ -21,6 +21,40 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: () => import(/* webpackChunkName: "login" */ './pages/Login')
+        },
+        {
+            path: '/playlist/:id',
+            component: () => import(/* webpackChunkName: "playlist" */ './pages/PlayList')
+        },
+        {
+            path: '/album/:id',
+            component: () => import(/* webpackChunkName: "album" */ './pages/Album')
+        },
+        {
+            path: '/full',
+            name: 'full',
+            component: () => import(/* webpackChunkName: "full" */ './pages/Full')
+        },
+        {
+            path: '/comment/song/:id',
+            component: () => import(/* webpackChunkName: "comment" */ './pages/Comment'),
+            meta: {
+                type: 'song'
+            }
+        },
+        {
+            path: '/comment/album/:id',
+            component: () => import(/* webpackChunkName: "comment" */ './pages/Comment'),
+            meta: {
+                type: 'album'
+            }
+        },
+        {
+            path: '/comment/list/:id',
+            component: () => import(/* webpackChunkName: "comment" */ './pages/Comment'),
+            meta: {
+                type: 'list'
+            }
         }
     ]
 })
