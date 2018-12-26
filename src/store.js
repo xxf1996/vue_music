@@ -7,7 +7,6 @@ const changeState = (prop) => (state, val) => state[prop] = val
 
 export default new Vuex.Store({
     state: {
-        // api: 'http://tx.xiexuefeng.cc:3000/music',
         uid: null, // 250099360，网易云音乐账号id
         userInfo: {}, // 当前用户信息
         headLeft: '1', // header的左边图标type
@@ -21,6 +20,7 @@ export default new Vuex.Store({
         playMode: 'loop', // 列表的播放模式，loop为列表循环
         analyser: {}, // Audio api的音频分析器结点
         lyric: '', // 普通歌词文本
+        infoList: false // InfoList组件的显示与否
     },
     mutations: {
         changeUser(state, id) {
@@ -58,6 +58,9 @@ export default new Vuex.Store({
         },
         changeLyric(state, val) {
             state.lyric = val
+        },
+        setInfoList(state, val) {
+            state.infoList = val
         }
     },
     getters: {

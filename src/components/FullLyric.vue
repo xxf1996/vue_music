@@ -14,13 +14,18 @@
  * 全屏滚动歌词
  * @prop {Array} lrc 歌词信息数组，数组元素为每行歌词（对象）
  * @prop {Number} cur 当前播放进度对应哪一句歌词的索引
+ * @prop {Boolean} isShow 外层与v-show绑定的值，便于一些DOM操作
  */
+import {print} from '../util/debug'
+
 export default {
     name: 'FullLyric',
-    props: ['lrc', 'cur'],
+    props: ['lrc', 'cur', 'isShow'],
     data() {
         return {
-            container: null
+            container: null,
+            lrcBox: null,
+            pad: 0
         }
     },
     computed: {
@@ -30,20 +35,30 @@ export default {
     },
     methods: {
         toCurLine() {
-            this.container.style.marginTop = -this.container.querySelector('.line-cur').offsetTop + 'px'
+            this.container.scrollTop = this.lrcBox.querySelector('.line-cur').offsetTop - this.pad
+            // print(this.container.scrollTop)
+        },
+        init() {
+            this.lrcBox = document.getElementById('lrc')
+            this.container = this.lrcBox.parentNode
+            this.pad = this.container.clientHeight / 2
+            this.lrcBox.style.padding = `${this.pad}px 0`
+            //print(this.lrcBox, this.container, this.pad)
         }
     },
     mounted() {
-        this.container = document.getElementById('lrc')
         if(!this.noLyric){
+            this.init()
             this.toCurLine()
         }
+        print('mounted')
     },
     updated() { // prop值改变时触发子组件更新，而watch无法监听到
         if(!this.container){ // v-if切换时可能之前#lrc没有渲染！
-            this.container = document.getElementById('lrc')
+            this.init()
         }
         this.toCurLine()
+        print('updated')
     },
     watch: {
         cur() {
@@ -51,6 +66,12 @@ export default {
                 this.container = document.getElementById('lrc')
             }
             this.toCurLine()
+        },
+        isShow(val) {
+            if(val) {
+                this.init()
+                this.toCurLine()
+            }
         }
     }
 }
@@ -77,9 +98,7 @@ export default {
     #lrc{
         position: absolute;
         width: 100%;
-        top: 50%;
-        left: 0;
-        transition: margin-top 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
     }
     .line{
         margin: 0;

@@ -3,7 +3,7 @@
         <div class="full-bg" :style="bg"></div>
         <section class="full-main" @click="toggleCover">
             <AudioCanvas v-show="showCover" :cover="cover" :song="info.id" />
-            <FullLyric v-show="!showCover" :lrc="lrcData" :cur="curLine" />
+            <FullLyric v-show="!showCover" :isShow="!showCover" :lrc="lrcData" :cur="curLine" />
         </section>
         <section class="full-btn">
             <section class="process">

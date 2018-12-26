@@ -3,7 +3,11 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+function checkInfoList(to, from, next) {
+    
+}
+
+let router = new Router({
     routes: [
         {
             path: '/',
@@ -58,3 +62,15 @@ export default new Router({
         }
     ]
 })
+
+// router.beforeEach((to, from, next) => {
+//     console.log(to, from, next)
+//     next(vm => {
+//         if(vm.$store.state.infoList) {
+//             vm.$store.commit('setInfoList', false)
+//             return false
+//         }
+//     })
+// })
+
+export default router

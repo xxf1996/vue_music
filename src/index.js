@@ -11,8 +11,10 @@ import Icon from './components/Icon'
 
 // eruda.init() // 初始化控制面板
 
+const url = 'http://localhost:3000' // 使用时用实际api接口地址进行替换
+
 Vue.prototype.$axios = axios
-Vue.prototype.$req = (api, data = {}) => axios.get(`http://tx.xiexuefeng.cc:3000/music${api}`, {
+Vue.prototype.$req = (api, data = {}) => axios.get(url + api, {
     params: data
 })
 Vue.prototype.$player = document.getElementById('player') // audio元素

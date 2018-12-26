@@ -18,12 +18,15 @@
  * @slot title 底部标题区域
  * @slot content 底部列表区域
  */
+import {print} from '../util/debug'
+
 export default {
     name: 'InfoList',
     props: ['show'],
     methods: {
         hideMask(e) {
             this.$emit('update:show', false)
+            // print(e)
             e.preventDefault()
         }
     },
@@ -34,6 +37,8 @@ export default {
             }else{
                 window.removeEventListener('popstate', this.hideMask)
             }
+            this.$store.commit('setInfoList', nVal)
+            this.$emit('update:show', nVal)
         }
     }
 }

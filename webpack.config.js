@@ -141,6 +141,6 @@ module.exports = {
     },
     devServer: { // webpack-dev-server配置
         publicPath: '/',
-        host: '192.168.0.102' // 本机ip，方便局域网内访问调试
+        // host: '192.168.0.108' // 本机ip，方便局域网内访问调试
     }
 }
