@@ -2,7 +2,7 @@
     <section class="full">
         <div class="full-bg" :style="bg"></div>
         <section class="full-main" @click="toggleCover">
-            <AudioCanvas v-show="showCover" :cover="cover" :song="info.id" />
+            <AudioCanvas v-show="showCover" :cover="cover" :song="info" />
             <FullLyric v-show="!showCover" :isShow="!showCover" :lrc="lrcData" :cur="curLine" />
         </section>
         <section class="full-btn">
@@ -70,7 +70,7 @@ export default {
         playing() {
             return this.$store.state.playing
         },
-        info() {
+        info() { // 当前播放歌曲的信息
             return this.$store.getters.songInfo
         },
         cover() { // 专辑封面地址
@@ -213,13 +213,13 @@ export default {
         }
     },
     created() {
-        if(this.info.id){
+        if(this.info.id){ // 当前是否有歌曲在播放
             this.parseLyric()
             this.initPage()
-            this.$store.commit('changeBottom', false)
-            this.$store.commit('changeBg', 'transparent')
+            this.$store.commit('changeBottom', false) // 全屏播放时隐藏底部播放器
+            this.$store.commit('changeBg', 'transparent') // 全屏播放时页面标题背景透明
             this.totalTime = this.formatTime(this.$player.duration)
-            // this.$player.removeEventListener('timeupdate')
+            
             this.$player.addEventListener('timeupdate', e => { // audio的时间更新事件
                 let cur = this.$player.currentTime 
                 this.curTime = this.formatTime(cur)
@@ -248,6 +248,9 @@ export default {
     watch: {
         lyric(nVal, oVal) {
             this.parseLyric()
+        },
+        info(val) { // 歌曲变化时重新设置标题
+            this.initPage()
         }
     }
 }

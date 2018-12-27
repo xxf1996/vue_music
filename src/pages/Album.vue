@@ -43,16 +43,25 @@ export default {
         },
         publish() {
             return dayjs(this.info.publishTime || 0).format('YYYY.M.D')
+        },
+        pageInfo() {
+            return {
+                left: '23',
+                right: '15',
+                title: `专辑：${this.info.name}`
+            }
         }
     },
     methods: {
         singer(arr) {
             return arr.map(item => item.name).join(',')
+        },
+        initPage() {
+            this.$store.dispatch('setPage', this.pageInfo)
         }
     },
     created() {
-        this.$store.commit('changeTitle', '歌单')
-        this.$store.commit('changeLeft', 23)
+        this.initPage()
         this.$req('/album', {
             id: this.$route.params.id
         }).then(res => {
@@ -63,6 +72,11 @@ export default {
         }).catch(err => {
             throw err
         })
+    },
+    watch: {
+        pageInfo(val) {
+            this.initPage()
+        }
     }
 }
 </script>

@@ -67,8 +67,8 @@ export default {
             }
             this.toCurLine()
         },
-        isShow(val) {
-            if(val) {
+        isShow(val) { // v-show切换时需要重新获取DOM（前提是有歌词）
+            if(val && !this.noLyric) {
                 this.init()
                 this.toCurLine()
             }

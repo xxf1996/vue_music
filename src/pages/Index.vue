@@ -2,11 +2,14 @@
     <section class="index">
         <section class="index-tab">
             <mu-tabs :value.sync="curTab" style="height: 100%;" color="#f5222d" indicator-color="#fff" center>
-                <mu-tab class="tab-item">歌单</mu-tab>
-                <mu-tab class="tab-item">电台</mu-tab>
+                <mu-tab class="tab-item" v-for="(tab, i) in tabs" :key="i" :to="tab.path" tag="li">
+                    {{tab.name}}
+                </mu-tab>
             </mu-tabs>
         </section>
-        <router-view class="index-container"></router-view>
+        <keep-alive include="MyList, MyRadio">
+            <router-view class="index-container"></router-view>
+        </keep-alive>
     </section>
 </template>
 
@@ -19,7 +22,16 @@ export default {
     data() {
         return {
             curTab: 0,
-            tab: ['mylist', 'myradio']
+            tabs: [
+            {
+                path: 'mylist',
+                name: '歌单'
+            },
+            {
+                path: 'myradio',
+                name: '电台'
+            }
+            ]
         }
     },
     computed: {
@@ -35,15 +47,11 @@ export default {
         }
     },
     methods: {
-        changeTab(val) {
-            this.$router.push({name: this.tab[val]})
-        },
         initPage() {
             this.$store.dispatch('setPage', this.pageInfo)
         }
     },
     created() {
-        this.changeTab(this.curTab)
         if(this.userInfo.nickname){
             this.initPage()
         }
@@ -65,5 +73,6 @@ export default {
     }
     .tab-item{
         font-size: 14px;
+        list-style-type: none;
     }
 </style>

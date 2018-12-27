@@ -70,7 +70,7 @@ export default {
             this.$router.push(`/comment/song/${this.info.id}`)
         },
         toSinger() {
-
+            this.$router.push(`/singer/${this.info.ar[0].id}`)
         },
         toAlbum() {
             this.$router.push(`/album/${this.info.al.id}`)

@@ -6,8 +6,12 @@
         </section>
         <section class="func">
             <Icon class="func-btn" type="26" :size="setRem(24)" @click.native="toComment" />
-            <Icon class="func-btn" type="27" :size="setRem(24)" />
+            <Icon class="func-btn" type="27" :size="setRem(24)" @click.native.stop="toOp" />
         </section>
+        <InfoList :show.sync="showOp">
+            <p class="op-title text-more" slot="title">歌曲：{{song.name}}</p>
+            <SongOp :info="song" slot="content" @hide="hideOp" />
+        </InfoList>
     </section>
 </template>
 
@@ -15,11 +19,23 @@
 /**
  * 绘制音乐频谱，显示旋转封面
  * @prop {String} cover 歌曲封面地址
- * @prop {String} song 歌曲id
+ * @prop {String} song 歌曲信息
  */
+import InfoList from './InfoList'
+import SongOp from './SongOp'
+
 export default {
     name: 'AudioCanvas',
     props: ['cover', 'song'],
+    components: {
+        InfoList,
+        SongOp
+    },
+    data() {
+        return {
+            showOp: false
+        }
+    },
     computed: {
         analyser() {
             return this.$store.state.analyser
@@ -30,10 +46,16 @@ export default {
     },
     methods: {
         toComment() {
-            this.$router.push(`/comment/song/${this.song}`)
+            this.$router.push(`/comment/song/${this.song.id}`)
         },
         normal(n) { // 归一化值至[5, 60]区间
             return n / 255 * 50 + 5
+        },
+        hideOp() {
+            this.showOp = false
+        },
+        toOp() {
+            this.showOp = true
         }
     },
     mounted() {
@@ -77,7 +99,7 @@ export default {
             ctx.stroke()
         }
 
-        function dot() {
+        function dot() { // 环绕封面一圈的圆点
             for(let i = 0; i < simple; i++){
                 ctx.beginPath()
                 let angle = i / simple * 2 * pi
@@ -174,5 +196,12 @@ export default {
         top: 0;
         bottom: 0;
         margin: auto;
+    }
+    .op-title{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 rem(5);
+        font-size: 12px;
+        line-height: rem(40);
     }
 </style>

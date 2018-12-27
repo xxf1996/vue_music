@@ -18,6 +18,11 @@ let router = new Router({
                     path: 'mylist',
                     name: 'mylist',
                     component: () => import(/* webpackChunkName: "mylist" */ './pages/MyList')
+                },
+                {
+                    path: 'myradio',
+                    name: 'myradio',
+                    component: () => import(/* webpackChunkName: "myradio" */ './pages/MyRadio')
                 }
             ]
         },
@@ -59,6 +64,10 @@ let router = new Router({
             meta: {
                 type: 'list'
             }
+        },
+        {
+            path: '/singer/:id',
+            component: () => import(/* webpackChunkName: "singer" */ './pages/Singer')
         }
     ]
 })
