@@ -18,7 +18,7 @@
             <p class="more-tip" slot="title">{{moreTitle}}</p>
             <section class="more-content" slot="content">
                 <PicList class="more-item" v-for="(list, k) in moreList" :size="setRem(40)" :key="k" @click.native="toDetail(list.id)">
-                    <img class="more-cover" :src="list.coverImgUrl" :alt="list.name" slot="cover">
+                    <img class="more-cover" :src="getPic(list.coverImgUrl, 60)" :alt="list.name" slot="cover">
                     <p class="more-title" slot="title">{{list.name}}</p>
                     <p class="more-info" slot="info">{{list.trackCount}} 首</p>
                 </PicList>

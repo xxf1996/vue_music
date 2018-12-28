@@ -58,7 +58,7 @@ export default {
         },
         bg() {
             return {
-                'background-image': this.cover? `url(${this.cover})`: null
+                'background-image': this.cover? `url(${this.getPic(this.cover, 400)})`: null
             }
         }
     },

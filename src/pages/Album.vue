@@ -3,11 +3,11 @@
         <ListDetail :list="list" :cover="cover" :comment="`/comment/album/${info.id}`">
             <section class="info" slot="info">
                 <section class="cover">
-                    <img class="cover-img" :src="cover" :alt="info.name">
+                    <img class="cover-img" :src="getPic(cover)" :alt="info.name">
                 </section>
                 <section class="about">
                     <p class="about-title">{{info.name}}</p>
-                    <p class="about-author">歌手：{{nickname}}<Icon type="25" size="12px"/></p>
+                    <p class="about-author" @click.stop="toSinger">歌手：{{nickname}}<Icon type="25" size="12px"/></p>
                     <p class="about-date">发行时间：{{publish}}</p>
                 </section>
             </section>
@@ -35,6 +35,9 @@ export default {
         }
     },
     computed: {
+        id() {
+            return this.$route.params.id
+        },
         cover() {
             return this.info.picUrl
         },
@@ -58,12 +61,15 @@ export default {
         },
         initPage() {
             this.$store.dispatch('setPage', this.pageInfo)
+        },
+        toSinger() {
+            this.$router.push(`/singer/${this.info.artist.id}`)
         }
     },
     created() {
         this.initPage()
         this.$req('/album', {
-            id: this.$route.params.id
+            id: this.id
         }).then(res => {
             if(res.data.code === 200){
                 this.info = res.data.album

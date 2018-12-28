@@ -1,7 +1,7 @@
 <template>
     <section class="item">
         <section class="cover">
-            <img class="cover-img" :src="info.user.avatarUrl" :alt="info.user.nickname">
+            <img class="cover-img" :src="getPic(info.user.avatarUrl, 40)" :alt="info.user.nickname">
         </section>
         <section class="info">
             <section class="user">

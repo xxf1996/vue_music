@@ -78,7 +78,7 @@ export default {
         },
         bg() { // 全屏背景图样式
             return {
-                'background-image': this.cover? `url(${this.cover})`: null
+                'background-image': this.cover? `url(${this.getPic(this.cover, 200)})`: null
             }
         },
         list() {
@@ -269,6 +269,7 @@ export default {
         width: 100%;
         height: 100%;
         background-size: cover;
+        background-color: #000;
         filter: brightness(0.75) blur(20px);
         overflow: hidden;
         z-index: -1;

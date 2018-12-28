@@ -1,7 +1,7 @@
 <template>
     <section class="canvas">
         <section class="container">
-            <img :src="cover" alt="cover" :class="['cover', playing? '': 'cover-pause']">
+            <img :src="getPic(cover, 200)" alt="cover" :class="['cover', playing? '': 'cover-pause']">
             <canvas id="can"></canvas>
         </section>
         <section class="func">

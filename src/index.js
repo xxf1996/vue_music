@@ -19,6 +19,8 @@ Vue.prototype.$req = (api, data = {}) => axios.get(url + api, {
 })
 Vue.prototype.$player = document.getElementById('player') // audio元素
 Vue.prototype.setRem = n => n / 37.5 + 'rem' // 将px值转为rem值
+// 给图片添加参数，默认图片地址返回原图
+Vue.prototype.getPic = (src, size = 120, q = 75) => `${src}?param=${size}y${size}&quality=${q}`
 
 Vue.component(Icon.name, Icon)
 Vue.use(Tabs)

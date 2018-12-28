@@ -3,7 +3,7 @@
         <ListDetail :list="list" :cover="cover" :comment="`/comment/list/${info.id}`">
             <section class="info" slot="info">
                 <section class="cover">
-                    <img class="cover-img" :src="info.coverImgUrl" :alt="info.name">
+                    <img class="cover-img" :src="getPic(info.coverImgUrl)" :alt="info.name">
                     <p class="cover-text">
                         <Icon type="22" size="16px" />
                         {{count}}

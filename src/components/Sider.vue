@@ -2,7 +2,7 @@
     <section v-show="show" class="side" @click.self.stop="hide">
         <v-touch class="container" @swipeleft="hide">
             <section class="info" :style="bg">
-                <img :src="avatar" alt="user" class="avatar">
+                <img :src="getPic(avatar, 60)" alt="user" class="avatar">
                 <p class="user">
                     {{name}}
                     <span class="level">Lv.{{level}}</span>
@@ -32,8 +32,9 @@ export default {
             return (this.user.profile || {}).avatarUrl
         },
         bg() {
+            let url = (this.user.profile || {}).backgroundUrl
             return {
-                'background-image': `url(${(this.user.profile || {}).backgroundUrl})`
+                'background-image': url? `url(${this.getPic(url, 360)})`: null
             }
         },
         name() {

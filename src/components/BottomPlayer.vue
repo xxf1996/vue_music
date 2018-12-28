@@ -1,6 +1,6 @@
 <template>
     <section class="player" @click="toFull">
-        <img class="cover" :src="album.picUrl" :alt="album.name">
+        <img class="cover" :src="getPic(album.picUrl, 60)" :alt="album.name">
         <section class="text">
             <p class="title hide-more">{{song.name}}</p>
             <p class="info hide-more">{{singer()}}</p>

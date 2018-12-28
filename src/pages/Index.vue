@@ -38,11 +38,14 @@ export default {
         userInfo() {
             return this.$store.state.userInfo
         },
+        nickname() {
+            return (this.userInfo.profile || {}).nickname
+        },
         pageInfo() {
             return {
                 left: 1,
                 right: 15,
-                title: (this.userInfo.profile || {}).nickname
+                title: this.nickname
             }
         }
     },
@@ -52,7 +55,8 @@ export default {
         }
     },
     created() {
-        if(this.userInfo.nickname){
+        if(this.nickname){
+            this.$router.replace({name: 'mylist'})
             this.initPage()
         }
     },
