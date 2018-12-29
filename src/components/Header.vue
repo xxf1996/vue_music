@@ -3,7 +3,7 @@
         <section class="head-left">
             <Icon :type="left" @click.native="op(left)"/>
         </section>
-        <span class="head-title">{{title}}</span>
+        <span class="head-title text-more">{{title}}</span>
         <section class="head-right">
             <Icon :type="right" @click.native="op(right)"/>
         </section>

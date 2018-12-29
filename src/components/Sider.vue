@@ -2,7 +2,7 @@
     <section v-show="show" class="side" @click.self.stop="hide">
         <v-touch class="container" @swipeleft="hide">
             <section class="info" :style="bg">
-                <img :src="getPic(avatar, 60)" alt="user" class="avatar">
+                <img :src="getPic(avatar, 60)" alt="user" class="avatar" @click.stop="toUser">
                 <p class="user">
                     {{name}}
                     <span class="level">Lv.{{level}}</span>
@@ -47,6 +47,9 @@ export default {
     methods: {
         hide() {
             this.$emit('update:show', false) // v-touch组件不支持.stop和.prevent
+        },
+        toUser() {
+            this.$router.push(`/user/${this.user.profile.userId}`)
         }
     }
 }

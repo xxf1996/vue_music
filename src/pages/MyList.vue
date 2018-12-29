@@ -16,13 +16,7 @@
         </section>
         <InfoList class="list-more" :show.sync="more">
             <p class="more-tip" slot="title">{{moreTitle}}</p>
-            <section class="more-content" slot="content">
-                <PicList class="more-item" v-for="(list, k) in moreList" :size="setRem(40)" :key="k" @click.native="toDetail(list.id)">
-                    <img class="more-cover" :src="getPic(list.coverImgUrl, 60)" :alt="list.name" slot="cover">
-                    <p class="more-title" slot="title">{{list.name}}</p>
-                    <p class="more-info" slot="info">{{list.trackCount}} 首</p>
-                </PicList>
-            </section>
+            <PlayItem class="more-content" slot="content" :list="moreList" />
         </InfoList>
     </section>
 </template>
@@ -32,7 +26,7 @@ import Banner from '../components/Banner'
 import FunGroup from '../components/FunGroup'
 import ListBlock from '../components/ListBlock'
 import InfoList from '../components/InfoList'
-import PicList from '../components/PicList'
+import PlayItem from '../components/PlayItem'
 
 /**
  * 首页内的歌单列表部分
@@ -44,7 +38,7 @@ export default {
         FunGroup,
         ListBlock,
         InfoList,
-        PicList
+        PlayItem
     },
     data() {
         return {
@@ -68,9 +62,6 @@ export default {
             this.moreList = info
             this.moreTitle = title
             this.more = true
-        },
-        toDetail(id) {
-            this.$router.push(`/playlist/${id}`)
         }
     },
     created() {

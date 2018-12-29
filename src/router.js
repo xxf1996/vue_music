@@ -67,7 +67,13 @@ let router = new Router({
         },
         {
             path: '/singer/:id',
+            name: 'singer',
             component: () => import(/* webpackChunkName: "singer" */ './pages/Singer')
+        },
+        {
+            path: '/user/:id',
+            name: 'user',
+            component: () => import(/* webpackChunkName: "user" */ './pages/User')
         }
     ]
 })

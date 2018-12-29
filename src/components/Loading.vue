@@ -1,6 +1,6 @@
 <template>
     <section class="loading">
-        <p class="text">加载中</p>
+        <p class="text">拼命加载中</p>
     </section>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     }
     .text{
         margin: 0;
-        line-height: rem(60);
+        line-height: rem(100);
         text-align: center;
         color: #333;
         &::after{

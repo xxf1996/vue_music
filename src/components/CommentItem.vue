@@ -1,6 +1,6 @@
 <template>
     <section class="item">
-        <section class="cover">
+        <section class="cover" @click.stop="toUser">
             <img class="cover-img" :src="getPic(info.user.avatarUrl, 40)" :alt="info.user.nickname">
         </section>
         <section class="info">
@@ -42,6 +42,11 @@ export default {
         },
         isReply() {
             return !!this.reply.length
+        }
+    },
+    methods: {
+        toUser() {
+            this.$router.push(`/user/${this.info.user.userId}`)
         }
     }
 }

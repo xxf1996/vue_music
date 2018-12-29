@@ -11,7 +11,11 @@
                 </section>
                 <section class="about">
                     <p class="about-title">{{info.name}}</p>
-                    <p class="about-author">{{nickname}}<Icon type="25" size="12px"/></p>
+                    <p class="about-author" @click.stop="toUser">
+                        <img class="about-avatar" :src="getPic(creator.avatarUrl, 20)" alt="author">
+                        {{nickname}}
+                        <Icon type="25" size="12px"/>
+                    </p>
                 </section>
             </section>
         </ListDetail>
@@ -45,8 +49,14 @@ export default {
         list() {
             return this.info.tracks || []
         },
+        creator() {
+            return this.info.creator || {}
+        },
         nickname() {
-            return (this.info.creator || {}).nickname
+            return this.creator.nickname
+        },
+        user() {
+            return this.creator.userId
         }
     },
     methods: {
@@ -59,6 +69,9 @@ export default {
                 right: '15',
                 title: '歌单'
             })
+        },
+        toUser() {
+            this.$router.push(`/user/${this.user}`)
         }
     },
     created() {
@@ -118,6 +131,15 @@ export default {
         margin: rem(6) 0;
     }
     .about-author{
+        margin: 0;
         font-size: 12px;
+        line-height: rem(25);
+    }
+    .about-avatar{
+        width: rem(20);
+        height: rem(20);
+        border-radius: 50%;
+        margin-right: rem(5);
+        vertical-align: middle;
     }
 </style>
