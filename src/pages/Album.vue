@@ -3,11 +3,11 @@
         <ListDetail :list="list" :cover="cover" :comment="`/comment/album/${info.id}`">
             <section class="info" slot="info">
                 <section class="cover">
-                    <img class="cover-img" :src="getPic(cover)" :alt="info.name">
+                    <img class="cover-img" v-lazy="getPic(cover)" :key="getPic(cover)" :alt="info.name">
                 </section>
                 <section class="about">
                     <p class="about-title">{{info.name}}</p>
-                    <p class="about-author" @click.stop="toSinger">歌手：{{nickname}}<Icon type="25" size="12px"/></p>
+                    <p class="about-author" @touchstart.stop="toSinger">歌手：{{nickname}}<Icon type="25" size="12px"/></p>
                     <p class="about-date">发行时间：{{publish}}</p>
                 </section>
             </section>
@@ -47,7 +47,7 @@ export default {
         publish() {
             return dayjs(this.info.publishTime || 0).format('YYYY.M.D')
         },
-        pageInfo() {
+        pageInfo() { // 页面初始化信息
             return {
                 left: '23',
                 right: '15',

@@ -3,7 +3,7 @@
         <ListDetail :list="list" :cover="cover" :comment="`/comment/list/${info.id}`">
             <section class="info" slot="info">
                 <section class="cover">
-                    <img class="cover-img" :src="getPic(info.coverImgUrl)" :alt="info.name">
+                    <img class="cover-img" v-lazy="getPic(info.coverImgUrl)" :key="getPic(info.coverImgUrl)" :alt="info.name">
                     <p class="cover-text">
                         <Icon type="22" size="16px" />
                         {{count}}
@@ -11,8 +11,8 @@
                 </section>
                 <section class="about">
                     <p class="about-title">{{info.name}}</p>
-                    <p class="about-author" @click.stop="toUser">
-                        <img class="about-avatar" :src="getPic(creator.avatarUrl, 20)" alt="author">
+                    <p class="about-author" @touchstart.stop="toUser">
+                        <img class="about-avatar" v-lazy="getPic(creator.avatarUrl, 20)" :key="getPic(creator.avatarUrl, 20)" alt="author">
                         {{nickname}}
                         <Icon type="25" size="12px"/>
                     </p>

@@ -1,7 +1,7 @@
 <template>
     <section class="comment">
-        <section class="target" @click="toTarget">
-            <img class="cover" :src="getPic(cover, 60)" :alt="cover">
+        <section class="target" @touchstart="toTarget">
+            <img class="cover" v-lazy="getPic(cover, 60)" :key="getPic(cover, 60)" :alt="cover">
             <section class="info">
                 <p class="title">{{title}}</p>
                 <p class="singer">{{singer}}</p>

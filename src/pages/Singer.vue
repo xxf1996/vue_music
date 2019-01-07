@@ -16,7 +16,7 @@
                 <section class="info" v-show="cur === 2">
                     <p class="info-title">{{artist.name}}简介</p>
                     <p class="info-content">{{artist.briefDesc}}</p>
-                    <p class="info-more" v-show="!infoMore" @click.stop="getMoreInfo">
+                    <p class="info-more" v-show="!infoMore" @touchstart.stop="getMoreInfo">
                         查看更多
                         <Icon type="25" :size="setRem(20)" />
                     </p>
@@ -32,6 +32,9 @@
 </template>
 
 <script>
+/**
+ * 歌手详情页，包含热门歌曲，专辑以及歌手信息三部分；
+ */
 import SongList from '../components/SongList'
 import AlbumList from '../components/AlbumList'
 import Loading from '../components/Loading'

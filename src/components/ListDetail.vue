@@ -7,7 +7,7 @@
                 <slot name="info"></slot>
             </section>
             <section class="func">
-                <section class="func-group" @click="toComment">
+                <section class="func-group" @touchstart="toComment">
                     <Icon type="26" :size="setRem(20)" />
                     <p class="func-text">评论</p>
                 </section>
@@ -17,7 +17,7 @@
                 </section>
             </section>
             <section class="container">
-                <p class="all" @click="play(0)">
+                <p class="all" @touchstart="play(0)">
                     <section class="all-play">
                         <Icon type="8" :size="setRem(20)" />
                     </section>

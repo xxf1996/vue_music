@@ -2,7 +2,7 @@
     <section class="user">
         <div class="bg" :style="bg"></div>
         <section class="info">
-            <img :src="getPic(profile.avatarUrl, 80)" alt="user" class="user-avatar">
+            <img v-lazy="getPic(profile.avatarUrl, 80)" :key="getPic(profile.avatarUrl, 80)" alt="user" class="user-avatar">
             <section class="info-container">
                 <p class="user-name">{{profile.nickname}}</p>
                 <p class="user-num">
@@ -31,6 +31,9 @@
 </template>
 
 <script>
+/**
+ * 用户详情页，包含个人信息及歌单信息；
+ */
 import PlayItem from '../components/PlayItem'
 import Loading from '../components/Loading'
 import dayjs from 'dayjs'

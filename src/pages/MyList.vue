@@ -3,13 +3,13 @@
         <Banner/>
         <FunGroup/>
         <section class="list-one">
-            <p class="list-title" @click="showMore(myList, '创建的歌单')">创建的歌单 <Icon type="25" :size="setRem(16)"/></p>
+            <p class="list-title" @touchstart="showMore(myList, '创建的歌单')">创建的歌单 <Icon type="25" :size="setRem(16)"/></p>
             <section class="list-container">
                 <ListBlock v-for="(item, i) in myShowList" :size="setRem(110)" :info="item" :key="i"/>
             </section>
         </section>
         <section class="list-one">
-            <p class="list-title" @click="showMore(commend, '推荐歌单')">推荐歌单 <Icon type="25" :size="setRem(16)"/></p>
+            <p class="list-title" @touchstart="showMore(commend, '推荐歌单')">推荐歌单 <Icon type="25" :size="setRem(16)"/></p>
             <section class="list-container">
                 <ListBlock v-for="(item, i) in myCommend" :size="setRem(110)" :info="item" :key="i"/>
             </section>

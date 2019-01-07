@@ -97,14 +97,15 @@ export default {
     }
     #lrc{
         position: absolute;
-        width: 100%;
+        left: rem(5);
+        right: rem(5);
         transition: all 0.3s ease-in-out;
     }
     .line{
         margin: 0;
         padding: rem(8) rem(5);
         text-align: center;
-        color: #ddd;
+        color: #aaa;
     }
     .line-cur{
         font-size: 16px;

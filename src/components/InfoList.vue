@@ -1,6 +1,6 @@
 <template>
-    <section class="mask" v-show="show" @click.stop="hideMask">
-        <section class="container" @click.stop="()=>{}">
+    <section class="mask" v-show="show" @touchstart.stop="hideMask">
+        <section class="container" @touchstart.stop="()=>{}">
             <section class="title">
                 <slot name="title"></slot>
             </section>
@@ -37,6 +37,7 @@ export default {
             }else{
                 window.removeEventListener('popstate', this.hideMask)
             }
+            this.$store.commit('changeClear', nVal)
             this.$store.commit('setInfoList', nVal)
             this.$emit('update:show', nVal)
         }

@@ -1,7 +1,7 @@
 <template>
     <section class="album-list">
-        <PicList class="list-item" :size="setRem(50)" v-for="(item, i) in list" :key="i" @click.native.stop="toAlbum(item.id)">
-            <img :src="getPic(item.picUrl, 60)" alt="cover" class="album-cover" slot="cover">
+        <PicList class="list-item" :size="setRem(50)" v-for="(item, i) in list" :key="i" @touchstart.native.stop="toAlbum(item.id)">
+            <img v-lazy="getPic(item.picUrl, 60)" :key="getPic(item.picUrl, 60)" alt="cover" class="album-cover" slot="cover">
             <p class="album-title text-more" slot="title">{{item.name}}</p>
             <p class="album-info" slot="info">
                 <span class="album-date">{{date(item.publishTime)}}</span>

@@ -1,7 +1,7 @@
 <template>
     <section class="playlist">
-        <PicList class="list-item" v-for="(item, k) in list" :size="setRem(40)" :key="k" @click.native.stop="toDetail(item.id)">
-            <img class="list-cover" :src="getPic(item.coverImgUrl, 60)" :alt="list.name" slot="cover">
+        <PicList class="list-item" v-for="(item, k) in list" :size="setRem(50)" :key="k" @touchstart.native.stop="toDetail(item.id)">
+            <img class="list-cover" v-lazy="getPic(item.coverImgUrl, 60)" :key="getPic(item.coverImgUrl, 60)" :alt="list.name" slot="cover">
             <p class="list-title" slot="title">{{item.name}}</p>
             <p class="list-info" slot="info">{{item.trackCount}} 首</p>
         </PicList>
@@ -41,15 +41,15 @@ export default {
     .list-title{
         box-sizing: border-box;
         margin: 0;
-        height: rem(24);
-        line-height: rem(24);
+        height: rem(30);
+        line-height: rem(30);
     }
     .list-info{
         box-sizing: border-box;
         margin: 0;
         font-size: 12px;
         color: #aaa;
-        height: rem(16);
-        line-height: rem(16);
+        height: rem(20);
+        line-height: rem(20);
     }
 </style>

@@ -43,7 +43,7 @@ export default {
         },
         pageInfo() {
             return {
-                left: 1,
+                left: 19,
                 right: 15,
                 title: this.nickname
             }
@@ -65,6 +65,7 @@ export default {
     },
     watch: {
         userInfo(val){
+            this.$router.replace({name: 'mylist'})
             this.initPage()
         }
     }

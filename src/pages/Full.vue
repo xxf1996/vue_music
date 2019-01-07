@@ -1,14 +1,14 @@
 <template>
-    <section class="full">
+    <section class="full" :style="fullH">
         <div class="full-bg" :style="bg"></div>
-        <section class="full-main" @click="toggleCover">
+        <section class="full-main" @touchstart="toggleCover">
             <AudioCanvas v-show="showCover" :cover="cover" :song="info" />
             <FullLyric v-show="!showCover" :isShow="!showCover" :lrc="lrcData" :cur="curLine" />
         </section>
         <section class="full-btn">
             <section class="process">
                 <span class="time-cur">{{curTime}}</span>
-                <section id="bar" @click="timePoint">
+                <section id="bar" @touchstart="timePoint" ref="bar">
                     <div class="bar-bg"></div>
                     <div class="bar-cur" :style="{width: process}"></div>
                     <div class="bar-tip" :style="{left: process}"></div>
@@ -17,11 +17,11 @@
             </section>
             <section class="control">
                 <Icon type="14" :size="setRem(32)" />
-                <Icon type="11" :size="setRem(48)" @click.native="toggleSong(-1)" />
-                <Icon v-show="playing" type="12" :size="setRem(48)" @click.native="pause" />
-                <Icon v-show="!playing" type="8" :size="setRem(48)" @click.native="play(null)" />
-                <Icon type="9" :size="setRem(48)" @click.native="toggleSong(1)" />
-                <Icon type="1" :size="setRem(32)" @click.native="showList"/>
+                <Icon type="11" :size="setRem(48)" @touchstart.native="toggleSong(-1)" />
+                <Icon v-show="playing" type="12" :size="setRem(48)" @touchstart.native="pause" />
+                <Icon v-show="!playing" type="8" :size="setRem(48)" @touchstart.native="play(null)" />
+                <Icon type="9" :size="setRem(48)" @touchstart.native="toggleSong(1)" />
+                <Icon type="1" :size="setRem(32)" @touchstart.native="showList"/>
             </section>
         </section>
         <InfoList class="list" :show.sync="showPlaylist">
@@ -30,7 +30,7 @@
                 当前播放
             </p>
             <section class="list-content" slot="content">
-                <p class="item" v-for="(item, i) in list" :key="i" @click="play(i)">
+                <p class="item" v-for="(item, i) in list" :key="i" @touchstart="play(i)">
                     <span :class="['item-name', i === curSong? 'item-cur': '']">{{item.name}}</span> - 
                     <span class="item-singer">{{singer(item.ar)}}</span>
                 </p>
@@ -43,6 +43,7 @@
 import AudioCanvas from '../components/AudioCanvas'
 import FullLyric from '../components/FullLyric'
 import InfoList from '../components/InfoList'
+import {print} from '../util/debug'
 
 /**
  * 全屏播放器页面，包含可视化频谱和歌词两部分。
@@ -56,9 +57,13 @@ export default {
             process: 0,
             showCover: true,
             showPlaylist: false,
+            barLeft: 0,
             barWidth: 0,
             lrcData: [],
-            curLine: 0
+            curLine: 0,
+            fullH: {
+                height: '100%'
+            }
         }
     },
     components: {
@@ -135,8 +140,9 @@ export default {
         toggleSong(d) {
             this.$store.dispatch('toggleSong', d)
         },
-        timePoint(e) { // 歌曲进度条跳转
-            this.$player.currentTime = this.$player.duration * e.offsetX / this.barWidth
+        timePoint(e) { // 歌曲进度条跳转（注意touch事件的属性）
+            this.$player.currentTime = this.$player.duration * (e.touches[0].clientX - this.barLeft) / this.barWidth
+            print(e.touches[0], this.barLeft)
         },
         parseLyric(){ // 解析lyric歌词，每行歌词信息包括时间轴和内容
             if(this.noLyric || this.lyric == ''){
@@ -205,6 +211,7 @@ export default {
             }
         },
         initPage() { // 设置页面标题等信息
+            this.$store.commit('changeClear', true)
             this.$store.dispatch('setPage', {
                 left: '23',
                 right: '24',
@@ -236,12 +243,18 @@ export default {
         }
     },
     mounted() {
-        this.barWidth = document.getElementById('bar').clientWidth
+        this.$nextTick(() => {
+            this.fullH.height = this.setRem(this.$parent.$refs.main.clientHeight) // 由于多了一层未知高度的滚动容器的包裹，100%不起作用，需要手动获取高度
+            // print(this.$parent.$refs.main)
+        })
+        this.barWidth = this.$refs.bar.clientWidth
+        this.barLeft = this.$refs.bar.offsetLeft
     },
     beforeRouteLeave(to, from, next) {
         if(this.info.id){
             this.$store.commit('changeBottom', true)
         }
+        this.$store.commit('changeClear', false)
         this.$store.commit('changeBg', null)
         next()
     },
@@ -260,7 +273,6 @@ export default {
     .full{
         display: flex;
         flex-flow: column nowrap;
-        height: 100%;
     }
     .full-bg{
         position: fixed;
