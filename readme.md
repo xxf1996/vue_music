@@ -15,6 +15,8 @@
 7. `Iconfont`
 8. `Muse-UI`
 
+线上地址：[http://xiexuefeng.cc/app/music](http://xiexuefeng.cc/app/music)
+
 ## 使用须知
 
 由于项目使用的 `API` 接口完全是基于 `NeteaseCloudMusicApi` 项目，因此需要事先启动该项目作为接口服务器（无论是本地还是云上）；启动好后修改 `src/index.js` 文件中的 `API` 接口设置为实际使用的接口地址即可。
