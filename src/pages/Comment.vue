@@ -1,6 +1,6 @@
 <template>
     <section class="comment">
-        <section class="target" @touchstart="toTarget">
+        <section class="target" @tap="toTarget">
             <img class="cover" v-lazy="getPic(cover, 60)" :key="getPic(cover, 60)" :alt="cover">
             <section class="info">
                 <p class="title">{{title}}</p>

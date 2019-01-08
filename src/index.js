@@ -10,7 +10,7 @@ import {Tabs, Carousel, TextField, Button} from 'muse-ui'
 import Icon from './components/Icon'
 import {defaultPic} from './util/pic'
 
-const url =  'http://localhost:3000' // 使用时用实际api接口地址进行替换
+const url = 'http://localhost:3000' // 使用时用实际api接口地址进行替换
 const dpr = window.devicePixelRatio || 1
 
 Vue.prototype.$axios = axios

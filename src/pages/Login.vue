@@ -2,7 +2,7 @@
     <section class="login">
         <mu-text-field v-model="uid" label="用户id" help-text="网易云音乐账户ID" @change="check" label-float full-width></mu-text-field>
         <p class="login-btn">
-            <mu-button class="login-enter" :disabled="empty" @touchstart.native="enter">确认</mu-button>
+            <mu-button class="login-enter" :disabled="empty" @click.native="enter">确认</mu-button>
         </p>
     </section>
 </template>
@@ -43,6 +43,13 @@ export default {
                 throw err
             })
         }
+    },
+    mounted() {
+        this.$store.commit('changeClear', true)
+    },
+    beforeRouteLeave(to, from, next) {
+        this.$store.commit('changeClear', false)
+        next()
     }
 }
 </script>

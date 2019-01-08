@@ -7,7 +7,7 @@
                 </section>
                 <section class="about">
                     <p class="about-title">{{info.name}}</p>
-                    <p class="about-author" @touchstart.stop="toSinger">歌手：{{nickname}}<Icon type="25" size="12px"/></p>
+                    <p class="about-author" @tap.stop="toSinger">歌手：{{nickname}}<Icon type="25" size="12px"/></p>
                     <p class="about-date">发行时间：{{publish}}</p>
                 </section>
             </section>

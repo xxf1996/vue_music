@@ -16,7 +16,7 @@
                 <section class="info" v-show="cur === 2">
                     <p class="info-title">{{artist.name}}简介</p>
                     <p class="info-content">{{artist.briefDesc}}</p>
-                    <p class="info-more" v-show="!infoMore" @touchstart.stop="getMoreInfo">
+                    <p class="info-more" v-show="!infoMore" @tap.stop="getMoreInfo">
                         查看更多
                         <Icon type="25" :size="setRem(20)" />
                     </p>

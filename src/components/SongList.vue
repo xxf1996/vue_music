@@ -1,12 +1,12 @@
 <template>
     <section class="songlist">
-        <PicList :size="setRem(50)" class="list-item" v-for="(item, i) in list" :key="i" @touchstart.native="play(i)">
+        <PicList :size="setRem(50)" class="list-item" v-for="(item, i) in list" :key="i" @tap.native="play(i)">
             <span class="list-num" slot="cover">{{i + 1}}</span>
             <p class="list-title text-more" slot="title">
                 {{item.name + (item.tns? `（${item.tns}）`: '')}}
             </p>
             <p class="list-info text-more" slot="info">{{singer(item.ar)}} - {{item.al.name}}</p>
-            <Icon slot="after" type="27" :size="setRem(24)" @touchstart.native.stop="toOp(item)" />
+            <Icon slot="after" type="27" :size="setRem(24)" @tap.native.stop="toOp(item)" />
         </PicList>
         <InfoList :show.sync="showOp">
             <p class="op-title text-more" slot="title">歌曲：{{songName}}</p>

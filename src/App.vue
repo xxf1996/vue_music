@@ -107,11 +107,13 @@ export default {
         this.$store.commit('changeAnalyser', analyser)
     },
     mounted() {
-        // this.$nextTick(() => {
-        //     new BScroll(this.$refs.main, {})
-        // })
         setTimeout(() => {
-            new BScroll(this.$refs.main, {})
+            new BScroll(this.$refs.main, {
+                tap: true,
+                bounce: {
+                    top: false
+                }
+            })
         }, 25)
     },
     watch: {

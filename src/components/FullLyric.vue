@@ -1,5 +1,5 @@
 <template>
-    <section class="lyric">
+    <section class="lyric" ref="container">
         <p class="no" v-if="noLyric">该歌曲没有歌词</p>
         <section id="lrc" v-else>
             <p v-for="(item, i) in lrc" :key="i" :class="['line', i === cur? 'line-cur': '']">
@@ -17,6 +17,7 @@
  * @prop {Boolean} isShow 外层与v-show绑定的值，便于一些DOM操作
  */
 import {print} from '../util/debug'
+import BScroll from 'better-scroll'
 
 export default {
     name: 'FullLyric',
@@ -25,6 +26,7 @@ export default {
         return {
             container: null,
             lrcBox: null,
+            scroll: null,
             pad: 0
         }
     },
@@ -35,7 +37,10 @@ export default {
     },
     methods: {
         toCurLine() {
-            this.container.scrollTop = this.lrcBox.querySelector('.line-cur').offsetTop - this.pad
+            this.scroll.scrollToElement(this.lrcBox.querySelector('.line-cur'), 500, 0, true)
+            // this.scroll.scrollTo(0, this.pad - this.lrcBox.querySelector('.line-cur').offsetTop, 300)
+            // print(this.lrcBox.querySelector('.line-cur').offsetTop - this.pad)
+            // this.container.scrollTop = this.lrcBox.querySelector('.line-cur').offsetTop - this.pad
             // print(this.container.scrollTop)
         },
         init() {
@@ -43,13 +48,30 @@ export default {
             this.container = this.lrcBox.parentNode
             this.pad = this.container.clientHeight / 2
             this.lrcBox.style.padding = `${this.pad}px 0`
+            if(this.scroll === null) {
+                this.scroll = new BScroll(this.$refs.container, {
+                    bounce: {
+                        top: false,
+                        bottom: false,
+                        left: false,
+                        right: false
+                    },
+                    //probeType: 2 // scroll事件相关设置
+                })
+                // this.scroll.on('scroll', pos => {
+                //     print(pos)
+                // })
+                this.$nextTick(() => {
+                    this.toCurLine()
+                })
+            }
             //print(this.lrcBox, this.container, this.pad)
         }
     },
     mounted() {
         if(!this.noLyric){
             this.init()
-            this.toCurLine()
+            print('init')
         }
         print('mounted')
     },
@@ -72,6 +94,9 @@ export default {
                 this.init()
                 this.toCurLine()
             }
+        },
+        lrc(val) {
+            if(this.scroll !== null) this.scroll.refresh()
         }
     }
 }

@@ -1,14 +1,14 @@
 <template>
     <section class="full" :style="fullH">
         <div class="full-bg" :style="bg"></div>
-        <section class="full-main" @touchstart="toggleCover">
+        <section class="full-main" @tap="toggleCover">
             <AudioCanvas v-show="showCover" :cover="cover" :song="info" />
             <FullLyric v-show="!showCover" :isShow="!showCover" :lrc="lrcData" :cur="curLine" />
         </section>
         <section class="full-btn">
             <section class="process">
                 <span class="time-cur">{{curTime}}</span>
-                <section id="bar" @touchstart="timePoint" ref="bar">
+                <section id="bar" @tap="timePoint" ref="bar">
                     <div class="bar-bg"></div>
                     <div class="bar-cur" :style="{width: process}"></div>
                     <div class="bar-tip" :style="{left: process}"></div>
@@ -17,11 +17,11 @@
             </section>
             <section class="control">
                 <Icon type="14" :size="setRem(32)" />
-                <Icon type="11" :size="setRem(48)" @touchstart.native="toggleSong(-1)" />
-                <Icon v-show="playing" type="12" :size="setRem(48)" @touchstart.native="pause" />
-                <Icon v-show="!playing" type="8" :size="setRem(48)" @touchstart.native="play(null)" />
-                <Icon type="9" :size="setRem(48)" @touchstart.native="toggleSong(1)" />
-                <Icon type="1" :size="setRem(32)" @touchstart.native="showList"/>
+                <Icon type="11" :size="setRem(48)" @tap.native="toggleSong(-1)" />
+                <Icon v-show="playing" type="12" :size="setRem(48)" @tap.native="pause" />
+                <Icon v-show="!playing" type="8" :size="setRem(48)" @tap.native="play(null)" />
+                <Icon type="9" :size="setRem(48)" @tap.native="toggleSong(1)" />
+                <Icon type="1" :size="setRem(32)" @tap.native="showList"/>
             </section>
         </section>
         <InfoList class="list" :show.sync="showPlaylist">
@@ -30,7 +30,7 @@
                 当前播放
             </p>
             <section class="list-content" slot="content">
-                <p class="item" v-for="(item, i) in list" :key="i" @touchstart="play(i)">
+                <p class="item" v-for="(item, i) in list" :key="i" @tap="play(i)">
                     <span :class="['item-name', i === curSong? 'item-cur': '']">{{item.name}}</span> - 
                     <span class="item-singer">{{singer(item.ar)}}</span>
                 </p>
@@ -100,6 +100,9 @@ export default {
         },
         noLyric() {
             return this.lyric === false // 没有歌词的情况
+        },
+        clearTransform() {
+            return this.$store.state.clearTransform
         }
     },
     methods: {
@@ -264,6 +267,9 @@ export default {
         },
         info(val) { // 歌曲变化时重新设置标题
             this.initPage()
+        },
+        clearTransform(val) {
+            this.$store.commit('changeClear', true)
         }
     }
 }

@@ -5,8 +5,8 @@
             <canvas id="can"></canvas>
         </section>
         <section class="func">
-            <Icon class="func-btn" type="26" :size="setRem(24)" @touchstart.native="toComment" />
-            <Icon class="func-btn" type="27" :size="setRem(24)" @touchstart.native.stop="toOp" />
+            <Icon class="func-btn" type="26" :size="setRem(24)" @tap.native="toComment" />
+            <Icon class="func-btn" type="27" :size="setRem(24)" @tap.native.stop="toOp" />
         </section>
         <InfoList :show.sync="showOp">
             <p class="op-title text-more" slot="title">歌曲：{{song.name}}</p>

@@ -1,8 +1,8 @@
 <template>
-    <section v-show="show" class="side" @touchstart.self.stop="hide">
+    <section v-show="show" class="side" @tap.self.stop="hide">
         <v-touch class="container" @swipeleft="hide">
             <section class="info" :style="bg">
-                <img v-lazy="getPic(avatar, 60)" :key="getPic(avatar, 60)" alt="user" class="avatar" @touchstart.stop="toUser">
+                <img v-lazy="getPic(avatar, 60)" :key="getPic(avatar, 60)" alt="user" class="avatar" @tap.stop="toUser">
                 <p class="user">
                     {{name}}
                     <span class="level">Lv.{{level}}</span>
@@ -11,13 +11,13 @@
             <section class="setting">
                 <section class="setting-tab">
                     <p class="setting-text">显示音乐频谱</p>
-                    <div :class="['switch', showAudio? 'switch-yes': '']" @touchstart.stop="toggleAudio">
+                    <div :class="['switch', showAudio? 'switch-yes': '']" @click.stop="toggleAudio">
                         <span class="switch-bar"></span>
                         <span class="switch-circle"></span>
                     </div>
                 </section>
                 <p class="logout">
-                    <mu-button @touchstart.native.stop="logout" class="logout-btn">重新登录</mu-button>
+                    <mu-button @click.native.stop="logout" class="logout-btn">重新登录</mu-button>
                 </p>
             </section>
         </v-touch>

@@ -11,7 +11,7 @@
                 </section>
                 <section class="about">
                     <p class="about-title">{{info.name}}</p>
-                    <p class="about-author" @touchstart.stop="toUser">
+                    <p class="about-author" @tap.stop="toUser">
                         <img class="about-avatar" v-lazy="getPic(creator.avatarUrl, 20)" :key="getPic(creator.avatarUrl, 20)" alt="author">
                         {{nickname}}
                         <Icon type="25" size="12px"/>

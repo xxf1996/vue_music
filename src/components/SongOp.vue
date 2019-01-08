@@ -1,6 +1,6 @@
 <template>
     <section class="op-list">
-        <PicList class="op-item" :size="setRem(40)" v-for="(item, i) in op" :key="i" @touchstart.stop.native="item.event" v-show="item.show">
+        <PicList class="op-item" :size="setRem(40)" v-for="(item, i) in op" :key="i" @tap.stop.native="item.event" v-show="item.show">
             <Icon class="op-icon" :type="item.type" :size="setRem(24)" slot="cover"/>
             <p class="op-text" slot="title">{{item.content}}</p>
         </PicList>
