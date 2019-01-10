@@ -11,13 +11,13 @@
             <section class="setting">
                 <section class="setting-tab">
                     <p class="setting-text">显示音乐频谱</p>
-                    <div :class="['switch', showAudio? 'switch-yes': '']" @click.stop="toggleAudio">
+                    <div :class="['switch', showAudio? 'switch-yes': '']" @tap.stop="toggleAudio">
                         <span class="switch-bar"></span>
                         <span class="switch-circle"></span>
                     </div>
                 </section>
                 <p class="logout">
-                    <mu-button @click.native.stop="logout" class="logout-btn">重新登录</mu-button>
+                    <mu-button @tap.native.stop="logout" class="logout-btn">重新登录</mu-button>
                 </p>
             </section>
         </v-touch>

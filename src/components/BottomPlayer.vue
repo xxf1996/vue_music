@@ -1,14 +1,14 @@
 <template>
-    <section class="player" @click="toFull">
+    <section class="player" @tap="toFull">
         <img class="cover" v-lazy="getPic(album.picUrl, 60)" :key="getPic(album.picUrl, 60)" :alt="album.name">
         <section class="text">
             <p class="title hide-more">{{song.name}}</p>
             <p class="info hide-more">{{singer()}}</p>
         </section>
-        <Icon v-show="playing" class="icon" type="12" :size="setRem(24)" @click.native.stop="pause" />
-        <Icon v-show="!playing" class="icon" type="8" :size="setRem(24)" @click.native.stop="play(null)" />
+        <Icon v-show="playing" class="icon" type="12" :size="setRem(24)" @tap.native.stop="pause" />
+        <Icon v-show="!playing" class="icon" type="8" :size="setRem(24)" @tap.native.stop="play(null)" />
 
-        <Icon class="icon" type="1" :size="setRem(24)" @click.native.stop="showList" />
+        <Icon class="icon" type="1" :size="setRem(24)" @tap.native.stop="showList" />
 
         <InfoList class="list" :show.sync="showPlaylist">
             <p class="list-title" slot="title">
@@ -16,7 +16,7 @@
                 当前播放
             </p>
             <section class="list-content" slot="content">
-                <p class="item" v-for="(item, i) in list" :key="i" @click.stop="play(i)">
+                <p class="item" v-for="(item, i) in list" :key="i" @tap.stop="play(i)">
                     <span :class="['item-name', i === curSong? 'item-cur': '']">{{item.name}}</span> - 
                     <span class="item-singer">{{singer(item.ar)}}</span>
                 </p>

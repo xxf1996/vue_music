@@ -1,11 +1,11 @@
 <template>
     <section class="head" :style="bg">
         <section class="head-left">
-            <Icon :type="left" @click.native="op(left)"/>
+            <Icon :type="left" @tap.native="op(left)"/>
         </section>
         <span class="head-title text-more">{{title}}</span>
         <section class="head-right">
-            <Icon :type="right" @click.native="op(right)"/>
+            <Icon :type="right" @tap.native="op(right)"/>
         </section>
         <Sider :show.sync="showSide" />
     </section>

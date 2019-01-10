@@ -16,6 +16,7 @@
 import Header from './components/Header'
 import BottomPlayer from './components/BottomPlayer'
 import BScroll from 'better-scroll'
+import {initTap} from './util/tap'
 
 export default {
     name: 'App',
@@ -107,9 +108,10 @@ export default {
         this.$store.commit('changeAnalyser', analyser)
     },
     mounted() {
+        initTap()
         setTimeout(() => {
             new BScroll(this.$refs.main, {
-                tap: true,
+                // tap: true,
                 bounce: {
                     top: false
                 }
@@ -125,7 +127,9 @@ export default {
                 }).then(res => {
                     if(res.data.code === 200) {
                         this.$player.src = res.data.data[0].url
-                        this.$player.play()
+                        setTimeout(() => {
+                            this.$player.play()
+                        }, 100)
                     }
                 }).catch(err => {
                     throw err

@@ -144,8 +144,8 @@ export default {
             this.$store.dispatch('toggleSong', d)
         },
         timePoint(e) { // 歌曲进度条跳转（注意touch事件的属性）
+            print(e)
             this.$player.currentTime = this.$player.duration * (e.touches[0].clientX - this.barLeft) / this.barWidth
-            print(e.touches[0], this.barLeft)
         },
         parseLyric(){ // 解析lyric歌词，每行歌词信息包括时间轴和内容
             if(this.noLyric || this.lyric == ''){
