@@ -191,7 +191,7 @@ export default {
         width: rem(180);
         height: rem(180);
         border-radius: 50%;
-        animation: rotate 15s linear infinite;
+        animation: rotate 32s linear infinite;
     }
     .cover-pause{
         animation-play-state: paused; /* >= IE10 */

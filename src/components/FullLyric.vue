@@ -56,6 +56,8 @@ export default {
                         left: false,
                         right: false
                     },
+                    stopPropagation: true,
+                    bindToWrapper: true
                     //probeType: 2 // scroll事件相关设置
                 })
                 // this.scroll.on('scroll', pos => {
@@ -130,7 +132,7 @@ export default {
         margin: 0;
         padding: rem(8) rem(5);
         text-align: center;
-        color: #aaa;
+        color: #ccc;
     }
     .line-cur{
         font-size: 16px;

@@ -1,5 +1,5 @@
 <template>
-    <section class="full" :style="fullH">
+    <section class="full" :style="fullH" @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
         <div class="full-bg" :style="bg"></div>
         <section class="full-main" @tap="toggleCover">
             <AudioCanvas v-show="showCover" :cover="cover" :song="info" />

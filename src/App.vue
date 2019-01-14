@@ -129,7 +129,7 @@ export default {
                         this.$player.src = res.data.data[0].url
                         setTimeout(() => {
                             this.$player.play()
-                        }, 100)
+                        }, 500)
                     }
                 }).catch(err => {
                     throw err
