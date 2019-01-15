@@ -1,6 +1,6 @@
 <template>
-    <section class="mask" v-show="show" @click.stop="hideMask">
-        <section class="container" @click.stop="()=>{}">
+    <section class="mask" v-show="show" @tap.stop="hideMask">
+        <section class="container" @tap.stop="()=>{}" @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
             <section class="title">
                 <slot name="title"></slot>
             </section>
@@ -18,12 +18,15 @@
  * @slot title 底部标题区域
  * @slot content 底部列表区域
  */
+import {print} from '../util/debug'
+
 export default {
     name: 'InfoList',
     props: ['show'],
     methods: {
         hideMask(e) {
             this.$emit('update:show', false)
+            // print(e)
             e.preventDefault()
         }
     },
@@ -34,6 +37,9 @@ export default {
             }else{
                 window.removeEventListener('popstate', this.hideMask)
             }
+            this.$store.commit('changeClear', nVal)
+            this.$store.commit('setInfoList', nVal)
+            this.$emit('update:show', nVal)
         }
     }
 }

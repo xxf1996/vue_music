@@ -1,7 +1,7 @@
 <template>
-    <section class="block" :style="blockSize" @click="showPlaylist(info.id)">
+    <section class="block" :style="blockSize" @tap="showPlaylist(info.id)">
         <section class="cover-container" :style="cover">
-            <img class="cover-img" :src="info.coverImgUrl" :alt="info.name">
+            <img class="cover-img" v-lazy="getPic(info.coverImgUrl)" :key="getPic(info.coverImgUrl)" :alt="info.name">
             <p class="cover-count">
                 <Icon type="22" size="16px" />
                 {{count}}

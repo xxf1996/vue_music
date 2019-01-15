@@ -1,7 +1,7 @@
 <template>
     <section class="item">
-        <section class="cover">
-            <img class="cover-img" :src="info.user.avatarUrl" :alt="info.user.nickname">
+        <section class="cover" @tap.stop="toUser">
+            <img class="cover-img" v-lazy="getPic(info.user.avatarUrl, 40)" :key="getPic(info.user.avatarUrl, 40)" :alt="info.user.nickname">
         </section>
         <section class="info">
             <section class="user">
@@ -42,6 +42,11 @@ export default {
         },
         isReply() {
             return !!this.reply.length
+        }
+    },
+    methods: {
+        toUser() {
+            this.$router.push(`/user/${this.info.user.userId}`)
         }
     }
 }

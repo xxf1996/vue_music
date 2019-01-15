@@ -3,7 +3,7 @@
         <div class="banner-bg"></div>
         <mu-carousel class="banner-container" hide-indicators>
             <mu-carousel-item v-for="(item, i) in info" :key="i">
-                <img class="banner-img" :src="item.imageUrl" alt="banner">
+                <img class="banner-img" v-lazy="item.imageUrl" :key="item.imageUrl" alt="banner">
                 <span class="banner-type" :style="{backgroundColor: item.titleColor}">{{item.typeTitle}}</span>
             </mu-carousel-item>
         </mu-carousel>

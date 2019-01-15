@@ -1,5 +1,5 @@
 const path = require('path')
-const uglifyjs = require('uglifyjs-webpack-plugin') // 压缩js的插件
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin') // 动态在html中插入生成的js路径
 const VueLoaderPlugin = require('vue-loader/lib/plugin') // 配合vue-loader的插件
 const CleanWebpackPlugin = require('clean-webpack-plugin') // 清空之前打包的文件
@@ -10,7 +10,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'), // 出口文件路径，必须是已存在的路径，否则dev不能查看到页面
         filename: '[name].[hash:8].js', // 每次输出加上不同的hash值
-        chunkFilename: '[name].[hash:8].js' // 指定分离出来的代码文件的名称
+        chunkFilename: '[name]/[name].[hash:8].js' // 指定分离出来的代码文件的名称
     },
     plugins: [ // 插件列表
         //new uglifyjs(),
@@ -124,23 +124,23 @@ module.exports = {
             }
         ]
     },
-    optimization: {
-        splitChunks: { // 将一些模块单独分离出来成js文件
-            cacheGroups: {
-                vendor: {
-                    test: /vue|axios/, // 直接使用 test 来做路径匹配
-                    chunks: "initial",
-                    name: "vendor",
-                    enforce: true,
-                },
-            },
-        },
-    },
+    // optimization: {
+    //     splitChunks: { // 将一些模块单独分离出来成js文件
+    //         cacheGroups: {
+    //             vendor: {
+    //                 test: /vue|axios/, // 直接使用 test 来做路径匹配
+    //                 chunks: "initial",
+    //                 name: "vendor",
+    //                 enforce: true
+    //             },
+    //         },
+    //     },
+    // },
     resolve: { // 模块解析设置
         extensions: ['.wasm', '.mjs', '.js', '.json', '.jsx', '.css', '.vue'] // 解析引入模块文件时，自动匹配的文件后缀列表
     },
     devServer: { // webpack-dev-server配置
         publicPath: '/',
-        host: '192.168.0.102' // 本机ip，方便局域网内访问调试
+        // host: '192.168.43.191' // 本机ip，方便局域网内访问调试
     }
 }

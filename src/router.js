@@ -3,7 +3,11 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+function checkInfoList(to, from, next) {
+    
+}
+
+let router = new Router({
     routes: [
         {
             path: '/',
@@ -14,6 +18,11 @@ export default new Router({
                     path: 'mylist',
                     name: 'mylist',
                     component: () => import(/* webpackChunkName: "mylist" */ './pages/MyList')
+                },
+                {
+                    path: 'myradio',
+                    name: 'myradio',
+                    component: () => import(/* webpackChunkName: "myradio" */ './pages/MyRadio')
                 }
             ]
         },
@@ -55,6 +64,28 @@ export default new Router({
             meta: {
                 type: 'list'
             }
+        },
+        {
+            path: '/singer/:id',
+            name: 'singer',
+            component: () => import(/* webpackChunkName: "singer" */ './pages/Singer')
+        },
+        {
+            path: '/user/:id',
+            name: 'user',
+            component: () => import(/* webpackChunkName: "user" */ './pages/User')
         }
     ]
 })
+
+// router.beforeEach((to, from, next) => {
+//     console.log(to, from, next)
+//     next(vm => {
+//         if(vm.$store.state.infoList) {
+//             vm.$store.commit('setInfoList', false)
+//             return false
+//         }
+//     })
+// })
+
+export default router

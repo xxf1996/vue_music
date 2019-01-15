@@ -7,10 +7,9 @@ const changeState = (prop) => (state, val) => state[prop] = val
 
 export default new Vuex.Store({
     state: {
-        // api: 'http://tx.xiexuefeng.cc:3000/music',
         uid: null, // 250099360，网易云音乐账号id
         userInfo: {}, // 当前用户信息
-        headLeft: '1', // header的左边图标type
+        headLeft: '4', // header的左边图标type
         headRight: '15', // header的右边图标type
         headTitle: '网易云音乐', // header标题
         headBg: null, // header背景色
@@ -21,6 +20,9 @@ export default new Vuex.Store({
         playMode: 'loop', // 列表的播放模式，loop为列表循环
         analyser: {}, // Audio api的音频分析器结点
         lyric: '', // 普通歌词文本
+        infoList: false, // InfoList组件的显示与否
+        showAudio: false, // 是否显示音乐频谱
+        clearTransform: false, // 消除better-scroll对容器设置的transform属性（对容器内fixed布局有影响）
     },
     mutations: {
         changeUser(state, id) {
@@ -58,6 +60,15 @@ export default new Vuex.Store({
         },
         changeLyric(state, val) {
             state.lyric = val
+        },
+        setInfoList(state, val) {
+            state.infoList = val
+        },
+        changeAudio(state, val) {
+            state.showAudio = val
+        },
+        changeClear(state, val) {
+            state.clearTransform = val
         }
     },
     getters: {
@@ -66,6 +77,11 @@ export default new Vuex.Store({
         },
         listKey(state) { // 歌曲列表的id组成的set
             return new Set(state.listInfo.map(item => item.id))
+        },
+        transfromStyle(state) {
+            return {
+                'transform': state.clearTransform? 'none': 'translate(0px, 0px) scale(1) translateZ(0px)'
+            }
         }
     },
     actions: {

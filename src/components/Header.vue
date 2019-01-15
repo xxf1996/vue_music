@@ -1,11 +1,11 @@
 <template>
     <section class="head" :style="bg">
         <section class="head-left">
-            <Icon :type="left" @click.native="op(left)"/>
+            <Icon :type="left" @tap.native="op(left)"/>
         </section>
-        <span class="head-title">{{title}}</span>
+        <span class="head-title text-more">{{title}}</span>
         <section class="head-right">
-            <Icon :type="right" @click.native="op(right)"/>
+            <Icon :type="right" @tap.native="op(right)"/>
         </section>
         <Sider :show.sync="showSide" />
     </section>
@@ -14,7 +14,8 @@
 <script>
 import Sider from './Sider'
 /**
- * 头部区域
+ * 头部区域；
+ * $store中的headBg可以设置背景颜色；
  * @prop {Number} left 左边图标的type值
  * @prop {Number} right 右边图标type值
  * @prop {String} title 标题内容
@@ -36,7 +37,7 @@ export default {
                 case 23: // 返回
                     this.$router.go(-1)
                     break;
-                case 1: // 侧边栏
+                case 19: // 侧边栏（个人信息 + 设置项）
                     this.showSide = true
                     break;
                 default:

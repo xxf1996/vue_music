@@ -2,14 +2,14 @@
     <section class="login">
         <mu-text-field v-model="uid" label="用户id" help-text="网易云音乐账户ID" @change="check" label-float full-width></mu-text-field>
         <p class="login-btn">
-            <mu-button class="login-enter" :disabled="empty" @click.native="enter">确认</mu-button>
+            <mu-button class="login-enter" :disabled="empty" @tap.native="enter">确认</mu-button>
         </p>
     </section>
 </template>
 
 <script>
 /**
- * 『伪』登录页
+ * 『伪』登录页，利用网易云uid进行信息获取，算不上真正的登录；
  */
 export default {
     name: 'Login',
@@ -34,15 +34,22 @@ export default {
                 uid: this.uid
             }).then(res => {
                 if(res.data.code === 200){
-                    sessionStorage.setItem('X_uid', this.uid)
+                    localStorage.setItem('X_uid', this.uid)
                     this.$store.commit('changeUser', this.uid)
-                    this.$store.commit('changeInfo', res.data.profile)
+                    this.$store.commit('changeInfo', res.data)
                     this.$router.push({name: 'index'})
                 }
             }).catch(err => {
                 throw err
             })
         }
+    },
+    mounted() {
+        this.$store.commit('changeClear', true)
+    },
+    beforeRouteLeave(to, from, next) {
+        this.$store.commit('changeClear', false)
+        next()
     }
 }
 </script>

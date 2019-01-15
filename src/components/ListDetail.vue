@@ -7,7 +7,7 @@
                 <slot name="info"></slot>
             </section>
             <section class="func">
-                <section class="func-group" @click="toComment">
+                <section class="func-group" @tap="toComment">
                     <Icon type="26" :size="setRem(20)" />
                     <p class="func-text">评论</p>
                 </section>
@@ -17,36 +17,21 @@
                 </section>
             </section>
             <section class="container">
-                <p class="all" @click="play(0)">
+                <p class="all" @tap="play(0)">
                     <section class="all-play">
                         <Icon type="8" :size="setRem(20)" />
                     </section>
                     播放全部
                     <span class="all-count">（共{{list.length}}首）</span>
                 </p>
-                <section class="content">
-                    <PicList :size="setRem(40)" class="list-item" v-for="(item, i) in list" :key="i" @click.native="play(i)">
-                        <span class="list-num" slot="cover">{{i + 1}}</span>
-                        <p class="list-title text-more" slot="title">
-                            {{item.name + (item.tns? `（${item.tns}）`: '')}}
-                        </p>
-                        <p class="list-info text-more" slot="info">{{singer(item.ar)}} - {{item.al.name}}</p>
-                        <Icon slot="after" type="27" :size="setRem(24)" @click.native.stop="toOp(item)" />
-                    </PicList>
-                </section>
+                <SongList class="content" :list="list" />
             </section>
         </section>
-        <InfoList :show.sync="showOp">
-            <p class="op-title text-more" slot="title">歌曲：{{songName}}</p>
-            <SongOp :info="songInfo" slot="content" @hide="hideOp" />
-        </InfoList>
     </section>
 </template>
 
 <script>
-import PicList from './PicList'
-import InfoList from './InfoList'
-import SongOp from './SongOp'
+import SongList from './SongList'
 
 /**
  * 歌单或专辑的详情页（头部信息 + 歌曲列表）
@@ -59,14 +44,11 @@ export default {
     name: 'ListDetail',
     props: ['list', 'cover', 'comment'],
     components: {
-        PicList,
-        SongOp,
-        InfoList
+        SongList
     },
     data() {
         return {
             showOp: false,
-            songName: '',
             songInfo: {}
         }
     },
@@ -76,29 +58,13 @@ export default {
         },
         bg() {
             return {
-                'background-image': this.cover? `url(${this.cover})`: null
+                'background-image': this.cover? `url(${this.getPic(this.cover, 400)})`: null
             }
         }
     },
     methods: {
-        play(idx) {
-            this.$store.commit('changeList', this.list)
-            this.$store.commit('changeCur', idx)
-            this.$store.commit('changeBottom', true)
-        },
         toComment() {
             this.$router.push(this.comment)
-        },
-        singer(arr) {
-            return arr.map(item => item.name).join(',')
-        },
-        toOp(info) {
-            this.songName = info.name
-            this.songInfo = info
-            this.showOp = true
-        },
-        hideOp() {
-            this.showOp = false
         }
     }
 }
@@ -158,36 +124,5 @@ export default {
     }
     .all-count{
         color: #aaa;
-    }
-    .list-item{
-        margin-bottom: rem(6);
-    }
-    .list-num{
-        font-size: 16px;
-        color: #aaa;
-    }
-    .list-title{
-        margin: 0;
-        height: rem(20);
-        line-height: rem(20);
-    }
-    .list-info{
-        margin: 0;
-        height: rem(20);
-        line-height: rem(20);
-        font-size: 12px;
-        color: #aaa;
-    }
-    .text-more{
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-    .op-title{
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0 rem(5);
-        font-size: 12px;
-        line-height: rem(40);
     }
 </style>

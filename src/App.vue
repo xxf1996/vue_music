@@ -1,10 +1,12 @@
 <template>
     <section id="app" :style="full">
         <Header :title="headTitle" :left="left" :right="right" />
-        <section class="main">
-            <keep-alive include="Index">
-                <router-view></router-view>
-            </keep-alive>
+        <section class="main" ref="main">
+            <section class="main-scroll" :style="transfromStyle">
+                <keep-alive include="Index">
+                    <router-view class="content"></router-view>
+                </keep-alive>
+            </section>
         </section>
         <BottomPlayer v-show="showBottom" :song="song" :list="list" />
     </section>
@@ -13,6 +15,8 @@
 <script>
 import Header from './components/Header'
 import BottomPlayer from './components/BottomPlayer'
+import BScroll from 'better-scroll'
+import {initTap} from './util/tap'
 
 export default {
     name: 'App',
@@ -20,7 +24,8 @@ export default {
         return {
             full: {
                 height: 0
-            }
+            },
+            scroller: {}
         }
     },
     computed: {
@@ -44,6 +49,9 @@ export default {
         },
         curSong() {
             return this.$store.state.curSong
+        },
+        transfromStyle() {
+            return this.$store.getters.transfromStyle
         }
     },
     components: {
@@ -59,10 +67,13 @@ export default {
         // rem适配设置
         this.full.height = window.innerHeight + 'px'
         this.rem()
-        window.addEventListener('resize', this.rem)
+        window.addEventListener('resize', () => {
+            this.full.height = window.innerHeight + 'px'
+            this.rem()
+        })
         // 判断之前是否『登录』过
         if(this.$store.state.uid === null){
-            let uid = sessionStorage.getItem('X_uid')
+            let uid = localStorage.getItem('X_uid')
             if(uid){
                 this.$store.commit('changeUser', uid)
                 this.$req('/user/detail', {
@@ -96,6 +107,17 @@ export default {
         analyser.connect(ctx.destination)
         this.$store.commit('changeAnalyser', analyser)
     },
+    mounted() {
+        initTap()
+        setTimeout(() => {
+            new BScroll(this.$refs.main, {
+                // tap: true,
+                bounce: {
+                    top: false
+                }
+            })
+        }, 25)
+    },
     watch: {
         song(val, old) { // 监听歌曲信息的变化，一旦变化立即请求歌曲的url进行切换
             if(val.id !== old.id) {
@@ -105,7 +127,9 @@ export default {
                 }).then(res => {
                     if(res.data.code === 200) {
                         this.$player.src = res.data.data[0].url
-                        this.$player.play()
+                        setTimeout(() => {
+                            this.$player.play()
+                        }, 500)
                     }
                 }).catch(err => {
                     throw err
