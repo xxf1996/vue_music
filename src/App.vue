@@ -71,8 +71,10 @@ export default {
             this.full.height = window.innerHeight + 'px'
             this.rem()
         })
-        // 判断之前是否『登录』过
-        if(this.$store.state.uid === null){
+
+        if(this.$store.state.isVisitor) { // 判断是否为游客模式
+            
+        }else if(this.$store.state.uid === null){ // 判断之前是否『登录』过
             let uid = localStorage.getItem('X_uid')
             if(uid){
                 this.$store.commit('changeUser', uid)

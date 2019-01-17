@@ -38,7 +38,9 @@ export default {
                     this.$router.go(-1)
                     break;
                 case 19: // 侧边栏（个人信息 + 设置项）
-                    this.showSide = true
+                    if(!this.isVisitor) {
+                        this.showSide = true
+                    }
                     break;
                 default:
                     break;
@@ -50,6 +52,9 @@ export default {
             return {
                 'background-color': this.$store.state.headBg
             }
+        },
+        isVisitor() {
+            return this.$store.state.isVisitor
         }
     }
 }

@@ -8,6 +8,7 @@ const changeState = (prop) => (state, val) => state[prop] = val
 export default new Vuex.Store({
     state: {
         uid: null, // 250099360，网易云音乐账号id
+        isVisitor: false, // 是否为游客模式
         userInfo: {}, // 当前用户信息
         headLeft: '4', // header的左边图标type
         headRight: '15', // header的右边图标type
@@ -69,6 +70,9 @@ export default new Vuex.Store({
         },
         changeClear(state, val) {
             state.clearTransform = val
+        },
+        changeVisitor(state, val) {
+            state.isVisitor = val
         }
     },
     getters: {
