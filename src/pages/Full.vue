@@ -32,7 +32,7 @@
             <section class="list-content" slot="content">
                 <p class="item" v-for="(item, i) in list" :key="i" @tap="play(i)">
                     <span :class="['item-name', i === curSong? 'item-cur': '']">{{item.name}}</span> - 
-                    <span class="item-singer">{{singer(item.ar)}}</span>
+                    <span class="item-singer">{{singer(item.ar || item.artists)}}</span>
                 </p>
             </section>
         </InfoList>
@@ -79,7 +79,7 @@ export default {
             return this.$store.getters.songInfo
         },
         cover() { // 专辑封面地址
-            return (this.info.al || {}).picUrl
+            return (this.info.al || this.song.album || {}).picUrl
         },
         bg() { // 全屏背景图样式
             return {
@@ -106,7 +106,7 @@ export default {
         }
     },
     methods: {
-        singer(arr = this.info.ar || []) { // 歌手信息（数组）
+        singer(arr = this.info.ar || this.info.artists || []) { // 歌手信息（数组）
             // 默认值防止没有数据时报错
             return arr.map(item => item.name).join(',')
         },

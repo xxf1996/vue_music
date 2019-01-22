@@ -42,6 +42,9 @@ export default {
                         this.showSide = true
                     }
                     break;
+                case 15: // 搜索
+                    this.$router.push({name: 'search'})
+                    break;
                 default:
                     break;
             }

@@ -3,7 +3,7 @@
         <Header :title="headTitle" :left="left" :right="right" />
         <section class="main" ref="main">
             <section class="main-scroll" :style="transfromStyle">
-                <keep-alive include="Index">
+                <keep-alive include="Index,Search">
                     <router-view class="content"></router-view>
                 </keep-alive>
             </section>

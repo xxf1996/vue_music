@@ -45,13 +45,13 @@ export default {
                 },
                 {
                     type: 19,
-                    content: `歌手：${this.singer(this.info.ar || [])}`,
+                    content: `歌手：${this.singer(this.info.ar || this.info.artists || [])}`,
                     event: ctx.toSinger,
                     show: true
                 },
                 {
                     type: 5,
-                    content: `专辑：${this.info.al? this.info.al.name: ''}`,
+                    content: `专辑：${(this.info.al || this.info.album || {}).name}`,
                     event: ctx.toAlbum,
                     show: true
                 }
@@ -70,10 +70,10 @@ export default {
             this.$router.push(`/comment/song/${this.info.id}`)
         },
         toSinger() {
-            this.$router.push(`/singer/${this.info.ar[0].id}`)
+            this.$router.push(`/singer/${(this.info.ar || this.info.artists)[0].id}`)
         },
         toAlbum() {
-            this.$router.push(`/album/${this.info.al.id}`)
+            this.$router.push(`/album/${(this.info.al || this.info.album).id}`)
         }
     }
 }

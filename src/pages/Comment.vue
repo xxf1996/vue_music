@@ -61,9 +61,9 @@ export default {
     },
     methods: {
         getInfo(data) {
-            this.cover = data.al.picUrl
+            this.cover = (data.al || data.album).picUrl
             this.title = data.name
-            this.singer = data.ar.map(a => a.name).join(',')
+            this.singer = (data.ar || data.artists).map(a => a.name).join(',')
         },
         toTarget() {
             let path = ''

@@ -70,7 +70,7 @@ export default {
             return {
                 left: 23,
                 right: 15,
-                title: this.artist.name
+                title: this.artist.name || '歌手信息'
             }
         },
         bg() {
