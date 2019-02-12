@@ -6,11 +6,11 @@ import VueTouch from 'vue-touch' // 移动端touch事件
 import VueLazyload from 'vue-lazyload'
 import App from './App'
 import 'muse-ui/lib/styles/base.less'
-import {Tabs, Carousel, TextField, Button} from 'muse-ui'
+import {Tabs, Carousel, TextField, Button, Radio} from 'muse-ui'
 import Icon from './components/Icon'
 import {defaultPic} from './util/pic'
 
-const url = 'http://localhost:3000' // 使用时用实际api接口地址进行替换
+const url = 'http://tx.xiexuefeng.cc:3000/music' //'http://localhost:3000' // 使用时用实际api接口地址进行替换
 const dpr = window.devicePixelRatio || 1
 
 Vue.prototype.$axios = axios
@@ -27,6 +27,7 @@ Vue.use(Tabs)
 Vue.use(Carousel)
 Vue.use(TextField)
 Vue.use(Button)
+Vue.use(Radio)
 Vue.use(VueTouch, 'v-touch')
 Vue.use(VueLazyload, {
     preload: 1.3,

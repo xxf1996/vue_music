@@ -2,7 +2,7 @@
     <section class="index">
         <section class="index-tab">
             <mu-tabs :value.sync="curTab" style="height: 100%;" color="#f5222d" indicator-color="#fff" center>
-                <mu-tab class="tab-item" v-for="(tab, i) in tabs" :key="i" :to="tab.path" tag="li">
+                <mu-tab class="tab-item" v-for="(tab, i) in tabs" :key="i" :to="tab.path" tag="li" event="tap">
                     {{tab.name}}
                 </mu-tab>
             </mu-tabs>
@@ -45,8 +45,11 @@ export default {
             return {
                 left: 19,
                 right: 15,
-                title: this.nickname
+                title: this.isVisitor?'游客模式': this.nickname
             }
+        },
+        isVisitor() {
+            return this.$store.state.isVisitor
         }
     },
     methods: {
@@ -55,13 +58,16 @@ export default {
         }
     },
     created() {
-        if(this.nickname){
+        if(this.nickname || this.$store.state.isVisitor){
             this.$router.replace({name: 'mylist'})
             this.initPage()
         }
     },
     activated() { // keep-alive组件激活时运行
-        this.initPage()
+        if(this.nickname || this.$store.state.isVisitor){
+            this.$router.replace({name: 'mylist'})
+            this.initPage()
+        }
     },
     watch: {
         userInfo(val){

@@ -23,6 +23,13 @@ export function initTap(eventType = 'tap') {
             tapEvent.changedTouches = e.changedTouches
             // print(tapEvent)
             e.target.dispatchEvent(tapEvent) // 向target派发事件
+            setTimeout(() => {
+                e.target.dispatchEvent(new MouseEvent('click', {
+                    button: 0,
+                    bubbles: true,
+                    cancelable: false
+                }))
+            }, 20)
         }
     }, true)
 }

@@ -3,6 +3,7 @@
         <mu-text-field v-model="uid" label="用户id" help-text="网易云音乐账户ID" @change="check" label-float full-width></mu-text-field>
         <p class="login-btn">
             <mu-button class="login-enter" :disabled="empty" @tap.native="enter">确认</mu-button>
+            <mu-button class="visitor" @tap.native="toVisitor">游客模式</mu-button>
         </p>
     </section>
 </template>
@@ -37,11 +38,16 @@ export default {
                     localStorage.setItem('X_uid', this.uid)
                     this.$store.commit('changeUser', this.uid)
                     this.$store.commit('changeInfo', res.data)
+                    this.$store.commit('changeVisitor', false)
                     this.$router.push({name: 'index'})
                 }
             }).catch(err => {
                 throw err
             })
+        },
+        toVisitor() {
+            this.$store.commit('changeVisitor', true)
+            this.$router.push({name: 'index'})
         }
     },
     mounted() {
@@ -68,6 +74,10 @@ export default {
     }
     .login-enter{
         background-color: $theme_bg;
+        color: $theme_text;
+    }
+    .visitor{
+        background-color: #39f;
         color: $theme_text;
     }
     .disabled{

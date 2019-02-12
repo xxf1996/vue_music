@@ -5,7 +5,7 @@
             <p class="list-title text-more" slot="title">
                 {{item.name + (item.tns? `（${item.tns}）`: '')}}
             </p>
-            <p class="list-info text-more" slot="info">{{singer(item.ar)}} - {{item.al.name}}</p>
+            <p class="list-info text-more" slot="info">{{singer(item.ar || item.artists)}} - {{(item.al || item.album).name}}</p>
             <Icon slot="after" type="27" :size="setRem(24)" @tap.native.stop="toOp(item)" />
         </PicList>
         <InfoList :show.sync="showOp">

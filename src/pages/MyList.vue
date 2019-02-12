@@ -2,7 +2,7 @@
     <section class="list">
         <Banner/>
         <FunGroup/>
-        <section class="list-one">
+        <section class="list-one" v-if="!isVisitor">
             <p class="list-title" @tap="showMore(myList, '创建的歌单')">创建的歌单 <Icon type="25" :size="setRem(16)"/></p>
             <section class="list-container">
                 <ListBlock v-for="(item, i) in myShowList" :size="setRem(110)" :info="item" :key="i"/>
@@ -12,6 +12,12 @@
             <p class="list-title" @tap="showMore(commend, '推荐歌单')">推荐歌单 <Icon type="25" :size="setRem(16)"/></p>
             <section class="list-container">
                 <ListBlock v-for="(item, i) in myCommend" :size="setRem(110)" :info="item" :key="i"/>
+            </section>
+        </section>
+        <section class="list-one">
+            <p class="list-title" @tap="showMore(top, '网友精选')">网友精选 <Icon type="25" :size="setRem(16)"/></p>
+            <section class="list-container">
+                <ListBlock v-for="(item, i) in myTop" :size="setRem(110)" :info="item" :key="i"/>
             </section>
         </section>
         <InfoList class="list-more" :show.sync="more">
@@ -44,6 +50,7 @@ export default {
         return {
             myList: [], // 当前用户创建的歌单列表
             commend: [], // 推荐的歌单列表
+            top: [], // 网友精选歌单列表
             more: false,
             moreTitle: 'more',
             moreList: []
@@ -55,6 +62,12 @@ export default {
         },
         myCommend() {
             return this.commend.length > 6 ? this.commend.slice(0, 6) : this.commend
+        },
+        myTop() {
+            return this.top.length > 6 ? this.top.slice(0, 6) : this.top
+        },
+        isVisitor() {
+            return this.$store.state.isVisitor
         }
     },
     methods: {
@@ -65,20 +78,32 @@ export default {
         }
     },
     created() {
-        this.$req('/user/playlist', {
-            uid: this.$store.state.uid
-        }).then(res => {
-            if(res.data.code === 200){
-                this.myList = res.data.playlist
-            }
-        }).catch(err => {
-            throw err
-        })
+        if(!this.isVisitor) {
+            this.$req('/user/playlist', {
+                uid: this.$store.state.uid
+            }).then(res => {
+                if(res.data.code === 200){
+                    this.myList = res.data.playlist
+                }
+            }).catch(err => {
+                throw err
+            })
+        }
 
         this.$req('/personalized').then(res => {
             if(res.data.code === 200){
                 let result = res.data.result
                 this.commend = JSON.parse(JSON.stringify(result).replace(/picUrl/g, 'coverImgUrl'))
+            }
+        }).catch(err => {
+            throw err
+        })
+
+        this.$req('/top/playlist', {
+            limit: 20
+        }).then(res => {
+            if(res.data.code === 200) {
+                this.top = res.data.playlists
             }
         }).catch(err => {
             throw err

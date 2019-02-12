@@ -17,6 +17,8 @@
 
 线上地址：[http://xiexuefeng.cc/app/music](http://xiexuefeng.cc/app/music)
 
+![code](files/code.png)
+
 ## 使用须知
 
 由于项目使用的 `API` 接口完全是基于 `NeteaseCloudMusicApi` 项目，因此需要事先启动该项目作为接口服务器（无论是本地还是云上）；启动好后修改 `src/index.js` 文件中的 `API` 接口设置为实际使用的接口地址即可。
@@ -56,6 +58,10 @@ npm run build
 为啥说是『伪』登录，因为这里只是获取用户的 `uid`，此后获取到的数据都是一些**公开只读**的数据，而涉及到真正改变用户信息的操作（如收藏，点赞，评论等等）都不能使用；其实 `NeteaseCloudMusicApi` 项目提供了与网易云音乐 `app` 一样的手机或邮箱登录的接口，但是由于我的目的不是制作替代品，只是练习项目和试验一些功能，利用 `uid` 获取一些『只读』数据已经足够了（况且还涉及到用户密码和安全问题）。
 
 那么如何查询自己的网易云音乐账户 `ID` 号呢？那就需要在网易云音乐 `PC` 网页端查看自己的个人主页，诸如`https://music.163.com/#/user/home?id=xxxxxxx`，`id` 后那串数字就是账户 `ID`。
+
+#### 关于游客模式
+
+游客模式实际上就是没有获取用户`uid`而已，因此有关『登录』用户的信息就无法查看（比如侧边栏信息和首页的用户歌单等），其他的数据基本上没有影响。
 
 ### 首页
 
@@ -125,6 +131,12 @@ npm run build
 
 ![user](files/user.png)
 
+### 搜索页
+
+点击顶部菜单中的搜索图标即可进入搜索页面，在输入框中输入关键字，回车后即可获取搜索结果；目前只支持单曲类型。
+
+![search](files/search.png)
+
 ## 个人笔记
 
 在写这个项目的时候当然也遇到许多问题，基本上遇到的问题都会记录下来，其中有些专门进行了整理放在博客上：
@@ -132,3 +144,4 @@ npm run build
 1. [关于rem布局 | snowdream](https://note.xiexuefeng.cc/post/rem-layout/)
 2. [如何实现歌词同步显示 | snowdream](https://note.xiexuefeng.cc/post/sync-lyric/)
 3. [音频播放器的制作与WebAudio API | snowdream](https://note.xiexuefeng.cc/post/music-player-and-webaudio/)
+4. [Event对象与自定义事件 | snowdream](https://note.xiexuefeng.cc/post/js-event-and-customed-js-event/)

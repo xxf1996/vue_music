@@ -4,9 +4,9 @@
         <section class="container">
             <section class="tab">
                 <mu-tabs :value.sync="cur" class="tab-container" color="transparent" indicator-color="#f5222d" center @change="tabChange">
-                    <mu-tab class="tab-item">热门歌曲</mu-tab>
-                    <mu-tab class="tab-item">专辑</mu-tab>
-                    <mu-tab class="tab-item">歌手信息</mu-tab>
+                    <mu-tab class="tab-item" event="tap">热门歌曲</mu-tab>
+                    <mu-tab class="tab-item" event="tap">专辑</mu-tab>
+                    <mu-tab class="tab-item" event="tap">歌手信息</mu-tab>
                 </mu-tabs>
             </section>
             <section class="content">
@@ -38,6 +38,7 @@
 import SongList from '../components/SongList'
 import AlbumList from '../components/AlbumList'
 import Loading from '../components/Loading'
+import {print} from '../util/debug'
 
 export default {
     name: 'Singer',
@@ -69,7 +70,7 @@ export default {
             return {
                 left: 23,
                 right: 15,
-                title: this.artist.name
+                title: this.artist.name || '歌手信息'
             }
         },
         bg() {
@@ -103,6 +104,9 @@ export default {
                     this.infoList = res.data.introduction
                 }
             })
+        },
+        showTap(e) {
+            print(e)
         }
     },
     created() {

@@ -3,7 +3,7 @@
         <Header :title="headTitle" :left="left" :right="right" />
         <section class="main" ref="main">
             <section class="main-scroll" :style="transfromStyle">
-                <keep-alive include="Index">
+                <keep-alive include="Index,Search">
                     <router-view class="content"></router-view>
                 </keep-alive>
             </section>
@@ -71,8 +71,10 @@ export default {
             this.full.height = window.innerHeight + 'px'
             this.rem()
         })
-        // 判断之前是否『登录』过
-        if(this.$store.state.uid === null){
+
+        if(this.$store.state.isVisitor) { // 判断是否为游客模式
+            
+        }else if(this.$store.state.uid === null){ // 判断之前是否『登录』过
             let uid = localStorage.getItem('X_uid')
             if(uid){
                 this.$store.commit('changeUser', uid)
@@ -152,7 +154,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
     #app{
         display: flex;
         flex-flow: column nowrap;
@@ -164,5 +166,12 @@ export default {
     }
     #player{
         display: none;
+    }
+    .mu-carousel-indicator-icon{
+        width: rem(8) !important;
+        height: rem(8) !important;
+    }
+    .mu-carousel-indicator-button{
+        width: rem(12) !important;
     }
 </style>

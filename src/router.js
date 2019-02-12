@@ -45,6 +45,11 @@ let router = new Router({
             component: () => import(/* webpackChunkName: "full" */ './pages/Full')
         },
         {
+            path: '/search',
+            name: 'search',
+            component: () => import(/* webpackChunkName: "search" */ './pages/Search')
+        },
+        {
             path: '/comment/song/:id',
             component: () => import(/* webpackChunkName: "comment" */ './pages/Comment'),
             meta: {

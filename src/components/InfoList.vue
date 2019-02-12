@@ -1,6 +1,6 @@
 <template>
-    <section class="mask" v-show="show" @tap.stop="hideMask">
-        <section class="container" @tap.stop="()=>{}" @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
+    <section class="mask" v-show="show" @tap.stop="hideMask" @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
+        <section class="container" @tap.stop="()=>{}">
             <section class="title">
                 <slot name="title"></slot>
             </section>
