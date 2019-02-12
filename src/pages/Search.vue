@@ -1,11 +1,11 @@
 <template>
     <section class="search">
-        <div class="option">
+        <!-- <div class="option">
             <mu-radio class="option-item" v-model="type" :value="1" label="单曲"></mu-radio>
             <mu-radio class="option-item" v-model="type" :value="10" label="专辑"></mu-radio>
             <mu-radio class="option-item" v-model="type" :value="100" label="歌手"></mu-radio>
             <mu-radio class="option-item" v-model="type" :value="1000" label="歌单"></mu-radio>
-        </div>
+        </div> -->
         <div class="sear">
             <mu-text-field class="saerch-input" v-model="content" placeholder="请输入搜索内容……" full-width @keyup.enter="getResult"></mu-text-field>
         </div>
@@ -18,6 +18,9 @@
 </template>
 
 <script>
+/**
+ * 搜索页面，暂且只支持单曲类型。
+ */
 import SongList from '../components/SongList'
 import Loading from '../components/Loading'
 
@@ -61,6 +64,9 @@ export default {
         }
     },
     created() {
+        this.initPage()
+    },
+    activated() {
         this.initPage()
     }
 }

@@ -154,7 +154,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
     #app{
         display: flex;
         flex-flow: column nowrap;
@@ -166,5 +166,12 @@ export default {
     }
     #player{
         display: none;
+    }
+    .mu-carousel-indicator-icon{
+        width: rem(8) !important;
+        height: rem(8) !important;
+    }
+    .mu-carousel-indicator-button{
+        width: rem(12) !important;
     }
 </style>

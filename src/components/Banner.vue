@@ -1,7 +1,7 @@
 <template>
     <section class="banner">
         <div class="banner-bg"></div>
-        <mu-carousel class="banner-container" hide-indicators>
+        <mu-carousel class="banner-container" hide-controls>
             <mu-carousel-item v-for="(item, i) in info" :key="i">
                 <img class="banner-img" v-lazy="item.imageUrl" :key="item.imageUrl" alt="banner">
                 <span class="banner-type" :style="{backgroundColor: item.titleColor}">{{item.typeTitle}}</span>

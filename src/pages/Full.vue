@@ -79,7 +79,7 @@ export default {
             return this.$store.getters.songInfo
         },
         cover() { // 专辑封面地址
-            return (this.info.al || this.song.album || {}).picUrl
+            return (this.info.al || this.info.album || {}).picUrl
         },
         bg() { // 全屏背景图样式
             return {
@@ -223,9 +223,9 @@ export default {
         }
     },
     created() {
+        this.initPage()
         if(this.info.id){ // 当前是否有歌曲在播放
             this.parseLyric()
-            this.initPage()
             this.$store.commit('changeBottom', false) // 全屏播放时隐藏底部播放器
             this.$store.commit('changeBg', 'transparent') // 全屏播放时页面标题背景透明
             this.totalTime = this.formatTime(this.$player.duration)
@@ -249,6 +249,7 @@ export default {
         this.$nextTick(() => {
             this.fullH.height = this.setRem(this.$parent.$refs.main.clientHeight) // 由于多了一层未知高度的滚动容器的包裹，100%不起作用，需要手动获取高度
             // print(this.$parent.$refs.main)
+            this.$store.commit('changeClear', true)
         })
         this.barWidth = this.$refs.bar.clientWidth
         this.barLeft = this.$refs.bar.offsetLeft
